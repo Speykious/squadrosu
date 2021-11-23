@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squadrosu.Framework", "Squadrosu.Framework\Squadrosu.Framework.csproj", "{CE30EA87-4F54-4FA4-8C09-AE9F0EC85CD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squadrosu.Framework.Test", "Squadrosu.Framework.Test\Squadrosu.Framework.Test.csproj", "{F3F222BC-9730-4085-BE5C-3B4D7F8912F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE30EA87-4F54-4FA4-8C09-AE9F0EC85CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE30EA87-4F54-4FA4-8C09-AE9F0EC85CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE30EA87-4F54-4FA4-8C09-AE9F0EC85CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE30EA87-4F54-4FA4-8C09-AE9F0EC85CD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3F222BC-9730-4085-BE5C-3B4D7F8912F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3F222BC-9730-4085-BE5C-3B4D7F8912F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3F222BC-9730-4085-BE5C-3B4D7F8912F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3F222BC-9730-4085-BE5C-3B4D7F8912F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
