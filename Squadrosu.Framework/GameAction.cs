@@ -4,7 +4,9 @@
 
 namespace Squadrosu.Framework;
 
-public class GameAction
+public struct GameAction
 {
-
+    public Player Player;
+    // TODO: think about the type of the piece parameter
+    public int Piece;
 }

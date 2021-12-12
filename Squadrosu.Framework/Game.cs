@@ -11,18 +11,98 @@ namespace Squadrosu.Framework;
 /// </summary>
 public sealed class Game
 {
-    public readonly int CurrentTurn;
-    public readonly Player CurrentPlayer;
-    public readonly GameState State;
+    /// <summary>
+    /// Number of the current turn.
+    /// </summary>
+    public int CurrentTurn { get; private set; }
+    /// <summary>
+    /// Current player.
+    /// </summary>
+    public Player CurrentPlayer { get; private set; }
+    /// <summary>
+    /// State of the game: whether it is playing or if some player won.
+    /// </summary>
+    public GameState State { get; private set; }
+    /// <summary>
+    /// Board containing the pieces. Used to determine if a player as won.
+    /// </summary>
     public readonly Board Board;
+    /// <summary>
+    /// A record of all the player moves so far.
+    /// </summary>
     public readonly List<GameAction> GameActions;
 
     public Game(Player firstPlayer)
     {
+        Board = new Board();
+        GameActions = new List<GameAction>();
+        Reset(firstPlayer);
+    }
+
+    /// <summary>
+    /// Goes to the next turn.
+    /// </summary>
+    private void nextTurn()
+    {
+        CurrentPlayer = CurrentPlayer == Player.White ? Player.Black : Player.White;
+        CurrentTurn++;
+    }
+
+    /// <summary>
+    /// Updates the <see cref="GameState"/> of the game.
+    /// </summary>
+    private void updateState()
+    {
+        switch (Board.PlayerWon())
+        {
+            case Player.White:
+                State = GameState.WhiteWon;
+                break;
+            case Player.Black:
+                State = GameState.BlackWon;
+                break;
+            default:
+                State = GameState.Playing;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Makes the current player move a given piece.
+    /// </summary>
+    /// <returns>Whether the piece has actually been moved.</returns>
+    public bool Move(int piece)
+    {
+        if (State != GameState.Playing)
+            return false;
+
+        if (!Board.Move(piece, CurrentPlayer))
+            return false;
+
+        GameActions.Add(new GameAction
+        {
+            Player = CurrentPlayer,
+            Piece = piece,
+        });
+
+        updateState();
+
+        if (State == GameState.Playing)
+            nextTurn();
+
+        return true;
+    }
+
+    /// <summary>
+    /// Resets the game.
+    /// </summary>
+    /// <param name="firstPlayer">The first player to make a move.</param>
+    public void Reset(Player firstPlayer)
+    {
+        Board.Reset();
         CurrentTurn = 0;
         CurrentPlayer = firstPlayer;
         State = GameState.Playing;
-        Board = new Board();
-        GameActions = new List<GameAction>();
+        GameActions.Clear();
     }
 }
