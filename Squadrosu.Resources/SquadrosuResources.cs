@@ -1,9 +1,12 @@
-﻿using System.Reflection;
+﻿// Copyright (c) SquadroCorp
+// This file is part of Squadrosu!.
+// Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
-namespace Squadrosu.Resources
+using System.Reflection;
+
+namespace Squadrosu.Resources;
+
+public static class SquadrosuResources
 {
-    public static class SquadrosuResources
-    {
-        public static Assembly ResourceAssembly => typeof(SquadrosuResources).Assembly;
-    }
+    public static Assembly ResourceAssembly => typeof(SquadrosuResources).Assembly;
 }

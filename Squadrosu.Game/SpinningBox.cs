@@ -1,3 +1,7 @@
+// Copyright (c) SquadroCorp
+// This file is part of Squadrosu!.
+// Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
+
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -5,48 +9,47 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 
-namespace Squadrosu.Game
+namespace Squadrosu.Game;
+
+public class SpinningBox : CompositeDrawable
 {
-    public class SpinningBox : CompositeDrawable
+    private Container box;
+
+    public SpinningBox()
     {
-        private Container box;
+        AutoSizeAxes = Axes.Both;
+        Origin = Anchor.Centre;
+    }
 
-        public SpinningBox()
+    [BackgroundDependencyLoader]
+    private void load(TextureStore textures)
+    {
+        InternalChild = box = new Container
         {
-            AutoSizeAxes = Axes.Both;
-            Origin = Anchor.Centre;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(TextureStore textures)
-        {
-            InternalChild = box = new Container
+            AutoSizeAxes = Axes.Both,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Children = new Drawable[]
             {
-                AutoSizeAxes = Axes.Both,
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Children = new Drawable[]
+                new Box
                 {
-                    new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                    },
-                    new Sprite
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Texture = textures.Get("logo")
-                    },
-                }
-            };
-        }
+                    RelativeSizeAxes = Axes.Both,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                },
+                new Sprite
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Texture = textures.Get("logo")
+                },
+            }
+        };
+    }
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            box.Loop(b => b.RotateTo(0).RotateTo(360, 2500));
-        }
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+        box.Loop(b => b.RotateTo(0).RotateTo(360, 2500));
     }
 }
