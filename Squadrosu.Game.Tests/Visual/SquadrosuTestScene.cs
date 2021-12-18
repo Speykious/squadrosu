@@ -12,12 +12,17 @@ public class SquadrosuTestScene : TestScene
 
     private class SquadrosuTestSceneTestRunner : SquadrosuGameBase, ITestSceneTestRunner
     {
-        private TestSceneTestRunner.TestRunner runner;
+        private readonly TestSceneTestRunner.TestRunner runner;
+
+        public SquadrosuTestSceneTestRunner() : base()
+        {
+            runner = new TestSceneTestRunner.TestRunner();
+        }
 
         protected override void LoadAsyncComplete()
         {
             base.LoadAsyncComplete();
-            Add(runner = new TestSceneTestRunner.TestRunner());
+            Add(runner);
         }
 
         public void RunTestBlocking(TestScene test) => runner.RunTestBlocking(test);

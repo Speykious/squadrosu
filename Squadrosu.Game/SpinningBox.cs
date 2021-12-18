@@ -13,38 +13,41 @@ namespace Squadrosu.Game;
 
 public class SpinningBox : CompositeDrawable
 {
-    private Container box;
+    private readonly Container box;
 
     public SpinningBox()
     {
         AutoSizeAxes = Axes.Both;
         Origin = Anchor.Centre;
+
+        box = new Container
+        {
+            AutoSizeAxes = Axes.Both,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+        };
     }
 
     [BackgroundDependencyLoader]
     private void load(TextureStore textures)
     {
-        InternalChild = box = new Container
+        box.Children = new Drawable[]
         {
-            AutoSizeAxes = Axes.Both,
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            Children = new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                },
-                new Sprite
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Texture = textures.Get("logo")
-                },
-            }
+                RelativeSizeAxes = Axes.Both,
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+            },
+            new Sprite
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Texture = textures.Get("logo")
+            },
         };
+
+        InternalChild = box;
     }
 
     protected override void LoadComplete()
