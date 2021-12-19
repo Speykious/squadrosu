@@ -14,6 +14,7 @@ namespace Squadrosu.Game;
 public class SpinningBox : CompositeDrawable
 {
     private readonly Container box;
+    private Sprite? sprite;
 
     public SpinningBox()
     {
@@ -33,17 +34,11 @@ public class SpinningBox : CompositeDrawable
     {
         box.Children = new Drawable[]
         {
-            new Box
-            {
-                RelativeSizeAxes = Axes.Both,
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-            },
-            new Sprite
+            sprite = new Sprite
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Texture = textures.Get("logo")
+                Texture = textures.Get(@"logo/squadrosu_logo_square"),
             },
         };
 
@@ -53,6 +48,6 @@ public class SpinningBox : CompositeDrawable
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        box.Loop(b => b.RotateTo(0).RotateTo(360, 2500));
+        sprite?.Loop(b => b.RotateTo(0).RotateTo(360, 2500));
     }
 }
