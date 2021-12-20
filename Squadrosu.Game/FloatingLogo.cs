@@ -13,7 +13,6 @@ namespace Squadrosu.Game;
 public class FloatingLogo : CompositeDrawable
 {
     private readonly Container box;
-    private Sprite? sprite;
     public double CycleDuration { get; set; }
 
     public FloatingLogo()
@@ -34,7 +33,7 @@ public class FloatingLogo : CompositeDrawable
     {
         box.Children = new Drawable[]
         {
-            sprite = new Sprite
+            new Sprite
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
