@@ -5,18 +5,18 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 
 namespace Squadrosu.Game;
 
-public class SpinningBox : CompositeDrawable
+public class FloatingLogo : CompositeDrawable
 {
     private readonly Container box;
     private Sprite? sprite;
+    public double CycleDuration { get; set; }
 
-    public SpinningBox()
+    public FloatingLogo()
     {
         AutoSizeAxes = Axes.Both;
         Origin = Anchor.Centre;
@@ -48,6 +48,13 @@ public class SpinningBox : CompositeDrawable
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        sprite?.Loop(b => b.RotateTo(0).RotateTo(360, 2500));
+        double d = CycleDuration / 4;
+        float amplitude = 50;
+
+        box.MoveToY(amplitude, duration: d, easing: Easing.OutSine)
+        .Then().MoveToY(0, duration: d, easing: Easing.InSine)
+        .Then().MoveToY(-amplitude, duration: d, easing: Easing.OutSine)
+        .Then().MoveToY(0, duration: d, easing: Easing.InSine)
+        .Loop();
     }
 }

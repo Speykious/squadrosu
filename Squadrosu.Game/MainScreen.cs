@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osuTK;
-using osuTK.Graphics;
 
 namespace Squadrosu.Game;
 
@@ -36,34 +35,39 @@ public class MainScreen : Screen
             },
             new FillFlowContainer
             {
-                Masking = true,
-                BorderColour = Color4Extensions.FromHex(@"ffffff"),
-                BorderThickness = 5,
                 Padding = new MarginPadding(30),
                 Spacing = new Vector2(20, 10),
                 Direction = FillDirection.Horizontal,
-                Size = new Vector2(800, 400),
+                RelativeSizeAxes = Axes.Both,
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Children = new Drawable[]
                 {
-                    new SpinningBox
+                    new FloatingLogo
                     {
+                        CycleDuration = 2000,
                         Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                     },
-                    new SpinningBox
+                    new FloatingLogo
                     {
+                        CycleDuration = 2500,
                         Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                     },
-                    new SpinningBox
+                    new FloatingLogo
                     {
+                        CycleDuration = 3000,
                         Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                     },
-                    new SpinningBox
+                    new FloatingLogo
                     {
+                        CycleDuration = 3500,
                         Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                     },
-                }
+                },
             },
         };
     }
