@@ -5,6 +5,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
+using Squadrosu.Game.Screens;
 
 namespace Squadrosu.Game;
 
@@ -32,6 +33,6 @@ public class SquadrosuGame : SquadrosuGameBase
     {
         base.LoadComplete();
 
-        screenStack.Push(new MainScreen());
+        screenStack.Push(new SplashScreen());
     }
 }

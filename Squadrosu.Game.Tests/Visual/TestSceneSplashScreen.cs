@@ -4,6 +4,7 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
+using Squadrosu.Game.Screens;
 
 namespace Squadrosu.Game.Tests.Visual;
 
@@ -14,6 +15,9 @@ public class TestSceneMainScreen : SquadrosuTestScene
 
     public TestSceneMainScreen()
     {
-        Add(new ScreenStack(new MainScreen()) { RelativeSizeAxes = Axes.Both });
+        Add(new ScreenStack(new SplashScreen())
+        {
+            RelativeSizeAxes = Axes.Both
+        });
     }
 }
