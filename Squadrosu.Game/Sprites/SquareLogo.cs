@@ -10,16 +10,17 @@ using osu.Framework.Graphics.Textures;
 
 namespace Squadrosu.Game.Sprites;
 
-public class SquareLogo : Container
+public class SquareLogo : Sprite
 {
+    public SquareLogo()
+    {
+        Anchor = Anchor.Centre;
+        Origin = Anchor.Centre;
+    }
+
     [BackgroundDependencyLoader]
     private void load(TextureStore textures)
     {
-        InternalChild = new Sprite
-        {
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            Texture = textures.Get(@"logo/squadrosu_logo_square"),
-        };
+        Texture = textures.Get(@"logo/squadrosu_logo_square");
     }
 }
