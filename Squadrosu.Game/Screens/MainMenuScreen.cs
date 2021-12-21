@@ -15,7 +15,7 @@ namespace Squadrosu.Game.Screens;
 
 public class MainMenuScreen : Screen
 {
-    private Logo logo;
+    private Logo? logo;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -42,6 +42,6 @@ public class MainMenuScreen : Screen
     {
         base.LoadComplete();
 
-        logo.Delay(200).MoveToX(.5f, 600, Easing.OutCirc);
+        logo?.Delay(200).MoveToX(.5f, 600, Easing.OutCirc);
     }
 }
