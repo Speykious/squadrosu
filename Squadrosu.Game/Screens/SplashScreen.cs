@@ -35,6 +35,11 @@ public class SplashScreen : Screen
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        logo.Delay(2000).FadeOutFromOne(500, Easing.InSine);
+
+        LoadComponentAsync(new MainMenuScreen(), screen =>
+        {
+            logo.Delay(2000).FadeOutFromOne(500, Easing.InOutQuad);
+            Scheduler.AddDelayed(() => this.Push(screen), 3000);
+        });
     }
 }

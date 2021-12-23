@@ -53,10 +53,12 @@ public class MainMenuScreen : Screen
     {
         base.LoadComplete();
 
+        this.FadeInFromZero(700, Easing.OutQuad);
+
         for (int i = 0; i < buttons.Length; i++)
             buttons[i].MoveContentToX(1000);
 
-        using (BeginDelayedSequence(400))
+        using (BeginDelayedSequence(500))
         {
             logo?.MoveToX(.5f, 600, Easing.OutQuint);
             for (int i = 0; i < buttons.Length; i++)
