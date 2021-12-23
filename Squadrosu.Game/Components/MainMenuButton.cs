@@ -115,7 +115,10 @@ public class MainMenuButton : Button
     protected override bool OnClick(ClickEvent e)
     {
         if (Enabled.Value)
+        {
+            // TODO: add select sound effect
             Background.FlashColour(Color4.White, 200);
+        }
 
         return base.OnClick(e);
     }
@@ -124,6 +127,7 @@ public class MainMenuButton : Button
     {
         if (Enabled.Value)
         {
+            // TODO: add hover sound effect
             Hover.FadeIn(200, Easing.OutQuint);
             Content.MoveToX(-100, 500, Easing.OutQuint);
         }
