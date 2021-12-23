@@ -90,7 +90,7 @@ public class MainMenuButton : Button
             },
         };
 
-        BackgroundColor = Color4Extensions.FromHex(@"383838");
+        BackgroundColor = Color4Extensions.FromHex(@"1b1b1b");
 
         Enabled.BindValueChanged(enabledChanged, true);
         Enabled.Value = true;
