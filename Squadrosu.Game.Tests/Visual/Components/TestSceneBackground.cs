@@ -4,10 +4,8 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osuTK;
 using Squadrosu.Game.Components;
 
@@ -19,11 +17,18 @@ public class TestSceneBackground : SquadrosuTestScene
     // You can make changes to classes associated with the tests and they will recompile and update immediately.
 
     private Background? background;
-    private Bindable<int> blur;
+    private readonly Bindable<int> blur;
+    private readonly Bindable<int> dim;
 
     public TestSceneBackground()
     {
         blur = new BindableNumber<int>
+        {
+            MinValue = 0,
+            MaxValue = 100,
+            Value = 0,
+        };
+        dim = new BindableNumber<int>
         {
             MinValue = 0,
             MaxValue = 100,
@@ -37,6 +42,7 @@ public class TestSceneBackground : SquadrosuTestScene
         background = new Background("default_background");
 
         blur.ValueChanged += updateBlur;
+        dim.ValueChanged += updateDim;
 
         Add(new Container
         {
@@ -47,11 +53,22 @@ public class TestSceneBackground : SquadrosuTestScene
         });
 
         AddSliderStep(@"Blur", 0, 100, 0, value => blur.Value = value);
-        AddStep("Set blur to 15", () => blur.Value = 15);
+        AddSliderStep(@"Dim", 0, 100, 0, value => dim.Value = value);
+        AddStep("Set blur=15 dim=50", () =>
+        {
+            blur.Value = 15;
+            dim.Value = 50;
+        });
+        AddStep("Set blur=0 dim=0", () =>
+        {
+            blur.Value = 0;
+            dim.Value = 0;
+        });
     }
 
-    private void updateBlur(ValueChangedEvent<int> n)
-    {
+    private void updateBlur(ValueChangedEvent<int> n) =>
         background?.BlurTo(new Vector2(n.NewValue, n.NewValue), 500, Easing.OutQuint);
-    }
+
+    private void updateDim(ValueChangedEvent<int> n) =>
+        background?.DimTo(n.NewValue, 500, Easing.OutQuint);
 }
