@@ -52,7 +52,7 @@ public class MainMenuButton : Button
         Anchor = Anchor.Centre;
         Origin = Anchor.Centre;
         Width = 500;
-        Height = 150;
+        Height = 120;
 
         Content = new Container
         {
