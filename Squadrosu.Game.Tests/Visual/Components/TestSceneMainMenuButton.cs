@@ -35,8 +35,6 @@ public class TestSceneMainMenuButton : SquadrosuTestScene
                 },
                 new MainMenuButton
                 {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
                     Text = "Hello",
                 },
             },

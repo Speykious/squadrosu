@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Screens;
 using osuTK;
 using osuTK.Graphics;
+using Squadrosu.Game.Components;
 using Squadrosu.Game.Sprites;
 
 namespace Squadrosu.Game.Screens;
@@ -35,6 +36,20 @@ public class MainMenuScreen : Screen
                 Position = new Vector2(-.2f, 0),
                 Shear = new Vector2(.2f, 0),
             },
+            new MainMenuButtons
+            {
+                Anchor = Anchor.CentreRight,
+                Origin = Anchor.CentreRight,
+                RelativePositionAxes = Axes.Both,
+                Position = new Vector2(-.2f, 0),
+                Children = new MainMenuButton[]
+                {
+                    new MainMenuButton { Text = "Jouer" },
+                    new MainMenuButton { Text = "Règles" },
+                    new MainMenuButton { Text = "Options" },
+                    new MainMenuButton { Text = "Quitter" },
+                }
+            }
         };
     }
 
