@@ -2,13 +2,9 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
-using Microsoft.Build.Framework;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Screens;
 using osuTK;
-using osuTK.Graphics;
 using Squadrosu.Game.Components;
 using Squadrosu.Game.Sprites;
 
@@ -16,17 +12,17 @@ namespace Squadrosu.Game.Screens;
 
 public class MainMenuScreen : Screen
 {
-    private Logo? logo;
+    private readonly Logo logo;
+    private readonly MainMenuButton[] buttons;
 
-    [BackgroundDependencyLoader]
-    private void load()
+    public MainMenuScreen()
     {
         InternalChildren = new Drawable[]
         {
-            new Box
+            new Background(@"default_background")
             {
-                RelativeSizeAxes = Axes.Both,
-                Colour = Color4.DimGray,
+                Blur = 10,
+                Dim = 10,
             },
             logo = new Logo
             {
@@ -42,7 +38,7 @@ public class MainMenuScreen : Screen
                 Origin = Anchor.CentreRight,
                 RelativePositionAxes = Axes.Both,
                 Position = new Vector2(-.2f, 0),
-                Children = new MainMenuButton[]
+                Children = buttons = new MainMenuButton[]
                 {
                     new MainMenuButton { Text = "Jouer" },
                     new MainMenuButton { Text = "Règles" },
@@ -57,6 +53,17 @@ public class MainMenuScreen : Screen
     {
         base.LoadComplete();
 
-        logo?.Delay(200).MoveToX(.5f, 600, Easing.OutCirc);
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].MoveContentToX(1000);
+
+        using (BeginDelayedSequence(400))
+        {
+            logo?.MoveToX(.5f, 600, Easing.OutQuint);
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                using (BeginDelayedSequence(i * 100))
+                    buttons[i].MoveContentToX(0, 600, Easing.OutQuint);
+            }
+        }
     }
 }
