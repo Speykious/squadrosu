@@ -105,6 +105,13 @@ public class MainMenuButton : Button
         Enabled.TriggerChange();
     }
 
+
+    /// <summary>
+    /// Smoothly adjusts the horizontal position of this button's content.
+    /// </summary>
+    public void MoveContentToX(float destination, double duration = 0, Easing easing = Easing.None) =>
+        Content.MoveToX(destination, duration, easing);
+
     protected override bool OnClick(ClickEvent e)
     {
         if (Enabled.Value)
