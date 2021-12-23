@@ -19,8 +19,8 @@ namespace Squadrosu.Game.Components;
 
 /// <summary>
 /// Pretty button.
-/// A good chunk of the code has been taken from osu!'s OsuButton.
-/// https://github.com/ppy/osu/blob/master/osu.Game/Graphics/UserInterface/OsuButton.cs
+/// A good chunk of the code has been taken from osu!'s OsuButton class:
+/// <see href="https://github.com/ppy/osu/blob/master/osu.Game/Graphics/UserInterface/OsuButton.cs"/>
 /// </summary>
 public class MainMenuButton : Button
 {
