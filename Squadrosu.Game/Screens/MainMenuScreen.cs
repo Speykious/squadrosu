@@ -10,7 +10,7 @@ using Squadrosu.Game.Sprites;
 
 namespace Squadrosu.Game.Screens;
 
-public class MainMenuScreen : Screen
+public class MainMenuScreen : SquadrosuScreen
 {
     private readonly Logo logo;
     private readonly MainMenuButton[] buttons;
@@ -67,5 +67,11 @@ public class MainMenuScreen : Screen
                     buttons[i].MoveContentToX(0, 600, Easing.OutQuint);
             }
         }
+    }
+
+    protected override void OnExit()
+    {
+        // TODO: add confirmation overlay
+        Game.Exit();
     }
 }

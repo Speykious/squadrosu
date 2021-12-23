@@ -10,7 +10,7 @@ using Squadrosu.Game.Sprites;
 
 namespace Squadrosu.Game.Screens;
 
-public class SplashScreen : Screen
+public class SplashScreen : SquadrosuScreen
 {
     private readonly SquareLogo logo;
 
@@ -39,7 +39,10 @@ public class SplashScreen : Screen
         LoadComponentAsync(new MainMenuScreen(), screen =>
         {
             logo.Delay(2000).FadeOutFromOne(500, Easing.InOutQuad);
-            Scheduler.AddDelayed(() => this.Push(screen), 3000);
+            Scheduler.AddDelayed(() =>
+            {
+                this.Push(screen);
+            }, 3000);
         });
     }
 }
