@@ -6,9 +6,11 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osuTK;
+using osuTK.Graphics;
 
 namespace Squadrosu.Game.Components;
 
@@ -24,6 +26,25 @@ public class Background : CompositeDrawable, IEquatable<Background>
     public readonly Sprite Sprite;
     private readonly string textureName;
     private readonly BufferedContainer bufferedContainer;
+    private readonly Box dimmer;
+
+    public Vector2 BlurSigma
+    {
+        get => bufferedContainer.BlurSigma / blur_scale;
+        set => BlurTo(value);
+    }
+
+    public int Blur
+    {
+        get => (int)BlurSigma.X;
+        set => BlurSigma = new Vector2(value, value);
+    }
+
+    public int Dim
+    {
+        get => (int)(dimmer.Alpha * 100);
+        set => dimmer.Alpha = value / 100f;
+    }
 
     public Background(string textureName = @"")
     {
@@ -43,6 +64,15 @@ public class Background : CompositeDrawable, IEquatable<Background>
                 FillMode = FillMode.Fill,
             },
         });
+
+        AddInternal(dimmer = new Box
+        {
+            RelativeSizeAxes = Axes.Both,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Colour = Color4.Black,
+            Alpha = 0,
+        });
     }
 
     [BackgroundDependencyLoader]
@@ -52,7 +82,6 @@ public class Background : CompositeDrawable, IEquatable<Background>
             Sprite.Texture = textures.Get(textureName);
     }
 
-    public Vector2 BlurSigma => bufferedContainer?.BlurSigma / blur_scale ?? Vector2.Zero;
 
     /// <summary>
     /// Smoothly adjusts <see cref="IBufferedContainer.BlurSigma"/> over time.
@@ -62,6 +91,9 @@ public class Background : CompositeDrawable, IEquatable<Background>
         bufferedContainer.FrameBufferScale = newBlurSigma == Vector2.Zero ? Vector2.One : new Vector2(blur_scale);
         bufferedContainer.BlurTo(newBlurSigma * blur_scale, duration, easing);
     }
+
+    public void DimTo(int dim, double duration = 0, Easing easing = Easing.None) =>
+        dimmer.FadeTo(dim / 100f, duration, easing);
 
     public virtual bool Equals(Background? other)
     {
