@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
@@ -26,6 +27,7 @@ public class MainMenuButton : Button
     protected Box Background;
     protected Box Hover;
     protected SpriteText SpriteText;
+    protected override Container<Drawable> Content { get; }
     public LocalisableString Text
     {
         get => SpriteText.Text;
@@ -49,34 +51,43 @@ public class MainMenuButton : Button
     {
         Anchor = Anchor.Centre;
         Origin = Anchor.Centre;
-        Masking = true;
-        CornerRadius = 30;
         Width = 500;
         Height = 150;
 
-        Background = new Box
+        Content = new Container
         {
-            RelativeSizeAxes = Axes.Both,
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-        };
-        Hover = new Box
-        {
-            Alpha = 0,
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             RelativeSizeAxes = Axes.Both,
-            Colour = Color4.White.Opacity(.05f),
-            Blending = BlendingParameters.Additive,
-            Depth = float.MinValue
-        };
-        SpriteText = new SpriteText
-        {
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            Shear = new Vector2(TextShearValue, 0),
-            Padding = new MarginPadding(20),
-            Font = FontUsage.Default.With(size: 80),
+            Masking = true,
+            CornerRadius = 30,
+            Children = new Drawable[]
+            {
+                Background = new Box
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                },
+                Hover = new Box
+                {
+                    Alpha = 0,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.White.Opacity(.05f),
+                    Blending = BlendingParameters.Additive,
+                    Depth = float.MinValue
+                },
+                SpriteText = new SpriteText
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Shear = new Vector2(TextShearValue, 0),
+                    Padding = new MarginPadding(20),
+                    Font = FontUsage.Default.With(size: 80),
+                },
+            },
         };
 
         BackgroundColor = Color4Extensions.FromHex(@"383838");
@@ -88,12 +99,8 @@ public class MainMenuButton : Button
     [BackgroundDependencyLoader]
     private void load()
     {
-        InternalChildren = new Drawable[]
-        {
-            Background,
-            Hover,
-            SpriteText,
-        };
+        AddInternal(Content);
+
         Enabled.ValueChanged += enabledChanged;
         Enabled.TriggerChange();
     }
@@ -111,7 +118,7 @@ public class MainMenuButton : Button
         if (Enabled.Value)
         {
             Hover.FadeIn(200, Easing.OutQuint);
-            this.MoveToX(-100, 500, Easing.OutQuint);
+            Content.MoveToX(-100, 500, Easing.OutQuint);
         }
 
         return base.OnHover(e);
@@ -121,7 +128,7 @@ public class MainMenuButton : Button
     {
         base.OnHoverLost(e);
         Hover.FadeOut(300);
-        this.MoveToX(0, 500, Easing.OutQuint);
+        Content.MoveToX(0, 500, Easing.OutQuint);
     }
 
     protected override bool OnMouseDown(MouseDownEvent e)
