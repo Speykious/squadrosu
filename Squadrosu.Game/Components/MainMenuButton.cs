@@ -1,0 +1,143 @@
+// Copyright (c) SquadroCorp
+// This file is part of Squadrosu!.
+// Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
+
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
+using osuTK;
+using osuTK.Graphics;
+
+namespace Squadrosu.Game.Components;
+
+/// <summary>
+/// Pretty button.
+/// A good chunk of the code has been taken from osu!'s OsuButton.
+/// https://github.com/ppy/osu/blob/master/osu.Game/Graphics/UserInterface/OsuButton.cs
+/// </summary>
+public class MainMenuButton : Button
+{
+    protected Box Background;
+    protected Box Hover;
+    protected SpriteText SpriteText;
+    public LocalisableString Text
+    {
+        get => SpriteText.Text;
+        set => SpriteText.Text = value;
+    }
+
+    private Color4 backgroundColor;
+    public Color4 BackgroundColor
+    {
+        get => backgroundColor;
+        set
+        {
+            backgroundColor = value;
+            Background.FadeColour(value);
+        }
+    }
+
+    public const float TextShearValue = .2f;
+
+    public MainMenuButton()
+    {
+        Anchor = Anchor.Centre;
+        Origin = Anchor.Centre;
+        Masking = true;
+        CornerRadius = 30;
+        Width = 500;
+        Height = 150;
+
+        Background = new Box
+        {
+            RelativeSizeAxes = Axes.Both,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+        };
+        Hover = new Box
+        {
+            Alpha = 0,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativeSizeAxes = Axes.Both,
+            Colour = Color4.White.Opacity(.05f),
+            Blending = BlendingParameters.Additive,
+            Depth = float.MinValue
+        };
+        SpriteText = new SpriteText
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Shear = new Vector2(TextShearValue, 0),
+            Padding = new MarginPadding(20),
+            Font = FontUsage.Default.With(size: 80),
+        };
+
+        BackgroundColor = Color4Extensions.FromHex(@"383838");
+
+        Enabled.BindValueChanged(enabledChanged, true);
+        Enabled.Value = true;
+    }
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        InternalChildren = new Drawable[]
+        {
+            Background,
+            Hover,
+            SpriteText,
+        };
+        Enabled.ValueChanged += enabledChanged;
+        Enabled.TriggerChange();
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (Enabled.Value)
+            Background.FlashColour(Color4.White, 200);
+
+        return base.OnClick(e);
+    }
+
+    protected override bool OnHover(HoverEvent e)
+    {
+        if (Enabled.Value)
+        {
+            Hover.FadeIn(200, Easing.OutQuint);
+            this.MoveToX(-100, 500, Easing.OutQuint);
+        }
+
+        return base.OnHover(e);
+    }
+
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        base.OnHoverLost(e);
+        Hover.FadeOut(300);
+        this.MoveToX(0, 500, Easing.OutQuint);
+    }
+
+    protected override bool OnMouseDown(MouseDownEvent e)
+    {
+        Content.ScaleTo(0.9f, 4000, Easing.OutQuint);
+        return base.OnMouseDown(e);
+    }
+
+    protected override void OnMouseUp(MouseUpEvent e)
+    {
+        Content.ScaleTo(1, 1000, Easing.OutElastic);
+        base.OnMouseUp(e);
+    }
+
+    private void enabledChanged(ValueChangedEvent<bool> e)
+    {
+        this.FadeColour(e.NewValue ? Color4.White : Color4.Gray, 200, Easing.OutQuint);
+    }
+}
