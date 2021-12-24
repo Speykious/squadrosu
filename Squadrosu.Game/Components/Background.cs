@@ -51,10 +51,9 @@ public class Background : CompositeDrawable, IEquatable<Background>
         this.textureName = textureName;
         RelativeSizeAxes = Axes.Both;
 
-        AddInternal(bufferedContainer = new BufferedContainer
+        AddInternal(bufferedContainer = new BufferedContainer(cachedFrameBuffer: true)
         {
             RelativeSizeAxes = Axes.Both,
-            CacheDrawnFrameBuffer = true,
             RedrawOnScale = false,
             Child = Sprite = new Sprite
             {
