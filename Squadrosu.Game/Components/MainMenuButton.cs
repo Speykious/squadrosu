@@ -3,15 +3,19 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Audio;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
+using osu.Framework.Utils;
 using osuTK;
 using osuTK.Graphics;
 
@@ -44,6 +48,9 @@ public class MainMenuButton : Button
             Background.FadeColour(value);
         }
     }
+
+    private DrawableSample? sampleHover;
+    private DrawableSample? sampleClick;
 
     public const float TextShearValue = .2f;
 
@@ -97,12 +104,15 @@ public class MainMenuButton : Button
     }
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(AudioManager audio)
     {
         AddInternal(Content);
 
         Enabled.ValueChanged += enabledChanged;
         Enabled.TriggerChange();
+
+        sampleHover = new DrawableSample(audio.Samples.Get(@"default-hover"));
+        sampleClick = new DrawableSample(audio.Samples.Get(@"default-select"));
     }
 
 
@@ -116,7 +126,12 @@ public class MainMenuButton : Button
     {
         if (Enabled.Value)
         {
-            // TODO: add select sound effect
+            if (sampleClick != null)
+            {
+                double range = .08;
+                sampleClick.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
+                sampleClick.Play();
+            }
             Background.FlashColour(Color4.White, 200);
         }
 
@@ -127,7 +142,12 @@ public class MainMenuButton : Button
     {
         if (Enabled.Value)
         {
-            // TODO: add hover sound effect
+            if (sampleHover != null)
+            {
+                double range = .08;
+                sampleHover.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
+                sampleHover.Play();
+            }
             Hover.FadeIn(200, Easing.OutQuint);
             Content.MoveToX(-100, 500, Easing.OutQuint);
         }

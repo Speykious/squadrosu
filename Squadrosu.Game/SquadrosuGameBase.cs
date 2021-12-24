@@ -33,5 +33,6 @@ public class SquadrosuGameBase : osu.Framework.Game
     private void load()
     {
         Resources.AddStore(new DllResourceStore(typeof(SquadrosuResources).Assembly));
+        Audio.Samples.PlaybackConcurrency = 6;
     }
 }
