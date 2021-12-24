@@ -3,7 +3,6 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Graphics;
-using osu.Framework.Screens;
 using osuTK;
 using Squadrosu.Game.Components;
 using Squadrosu.Game.Sprites;

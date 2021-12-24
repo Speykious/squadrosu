@@ -4,7 +4,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -28,7 +27,7 @@ namespace Squadrosu.Game.Components;
 /// </summary>
 public class MainMenuButton : Button
 {
-    protected Box Background;
+    protected ButtonBackground Background;
     protected Box Hover;
     protected SpriteText SpriteText;
     protected override Container<Drawable> Content { get; }
@@ -66,26 +65,10 @@ public class MainMenuButton : Button
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             RelativeSizeAxes = Axes.Both,
-            Masking = true,
-            CornerRadius = 30,
+            Masking = false,
             Children = new Drawable[]
             {
-                Background = new Box
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                },
-                Hover = new Box
-                {
-                    Alpha = 0,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.White.Opacity(.05f),
-                    Blending = BlendingParameters.Additive,
-                    Depth = float.MinValue
-                },
+                Background = new ButtonBackground(cornerRadius: 30),
                 SpriteText = new SpriteText
                 {
                     Anchor = Anchor.Centre,
@@ -148,7 +131,6 @@ public class MainMenuButton : Button
                 sampleHover.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
                 sampleHover.Play();
             }
-            Hover.FadeIn(200, Easing.OutQuint);
             Content.MoveToX(-100, 500, Easing.OutQuint);
         }
 
@@ -158,7 +140,6 @@ public class MainMenuButton : Button
     protected override void OnHoverLost(HoverLostEvent e)
     {
         base.OnHoverLost(e);
-        Hover.FadeOut(300);
         Content.MoveToX(0, 500, Easing.OutQuint);
     }
 
