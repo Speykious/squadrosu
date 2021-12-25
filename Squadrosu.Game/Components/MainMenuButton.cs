@@ -67,7 +67,10 @@ public class MainMenuButton : Button
             Masking = false,
             Children = new Drawable[]
             {
-                Background = new ButtonBackground(cornerRadius: 30),
+                Background = new ButtonBackground(cornerRadius: 30)
+                {
+                    Color = Color4Extensions.FromHex(@"323232"),
+                },
                 SpriteText = new SpriteText
                 {
                     Anchor = Anchor.Centre,
@@ -78,8 +81,6 @@ public class MainMenuButton : Button
                 },
             },
         };
-
-        BackgroundColor = Color4Extensions.FromHex(@"1b1b1b");
 
         Enabled.BindValueChanged(enabledChanged, true);
         Enabled.Value = true;
