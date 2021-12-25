@@ -16,7 +16,12 @@ namespace Squadrosu.Game.Components;
 
 public class ButtonBackground : CompositeDrawable
 {
+    private const float default_shadow_radius = 6f;
+    private const float default_shadow_opacity = .3f;
+    private const float hover_shadow_radius = 14f;
+    private const float hover_shadow_opacity = .3f;
     private const int duration = 200;
+
     private readonly Box background;
     private readonly Box hover;
 
@@ -34,8 +39,8 @@ public class ButtonBackground : CompositeDrawable
         EdgeEffect = new EdgeEffectParameters
         {
             Type = EdgeEffectType.Shadow,
-            Radius = 4f,
-            Colour = Color4.Black.Opacity(0.5f),
+            Radius = default_shadow_radius,
+            Colour = Color4.Black.Opacity(default_shadow_opacity),
         };
         AddInternal(background = new Box
         {
@@ -47,7 +52,7 @@ public class ButtonBackground : CompositeDrawable
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             RelativeSizeAxes = Axes.Both,
-            Colour = Color4.White.Opacity(.5f),
+            Colour = Color4.White.Opacity(.2f),
             Blending = BlendingParameters.Additive,
             Depth = float.MinValue
         });
@@ -58,9 +63,8 @@ public class ButtonBackground : CompositeDrawable
         TweenEdgeEffectTo(new EdgeEffectParameters
         {
             Type = EdgeEffectType.Shadow,
-            Radius = 10f,
-            Offset = new Vector2(0, 1),
-            Colour = Color4.Black.Opacity(0.4f),
+            Radius = hover_shadow_radius,
+            Colour = Color4.Black.Opacity(hover_shadow_opacity),
         }, duration, Easing.OutQuint);
         hover.FadeIn(200, Easing.OutQuint);
 
@@ -72,8 +76,8 @@ public class ButtonBackground : CompositeDrawable
         TweenEdgeEffectTo(new EdgeEffectParameters
         {
             Type = EdgeEffectType.Shadow,
-            Radius = 4f,
-            Colour = Color4.Black.Opacity(0.5f),
+            Radius = default_shadow_radius,
+            Colour = Color4.Black.Opacity(default_shadow_opacity),
         }, duration, Easing.OutQuint);
         hover.FadeOut(300);
 
