@@ -31,7 +31,7 @@ public class TestSceneMainMenuButton : SquadrosuTestScene
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Colour = Color4Extensions.FromHex(@"122224"),
+                    Colour = Color4Extensions.FromHex(@"404448"),
                 },
                 new MainMenuButton
                 {
