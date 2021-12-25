@@ -23,7 +23,7 @@ public sealed class Board
     /// Will move a player's piece on the board.
     /// </summary>
     /// <returns>Whether the piece has actually been moved.</returns>
-    public bool Move(int piece, Player player)
+    public bool Move(Piece piece, Player player)
     {
         throw new NotImplementedException();
     }
