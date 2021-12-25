@@ -28,7 +28,6 @@ namespace Squadrosu.Game.Components;
 public class MainMenuButton : Button
 {
     protected ButtonBackground Background;
-    protected Box Hover;
     protected SpriteText SpriteText;
     protected override Container<Drawable> Content { get; }
     public LocalisableString Text
