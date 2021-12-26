@@ -7,7 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK.Graphics;
-using Squadrosu.Game.Components;
+using Squadrosu.Game.UI;
 
 namespace Squadrosu.Game.Tests.Visual.Components;
 

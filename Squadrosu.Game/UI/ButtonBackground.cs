@@ -12,7 +12,7 @@ using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
 
-namespace Squadrosu.Game.Components;
+namespace Squadrosu.Game.UI;
 
 public class ButtonBackground : CompositeDrawable
 {

@@ -12,7 +12,7 @@ using osu.Framework.Graphics.Textures;
 using osuTK;
 using osuTK.Graphics;
 
-namespace Squadrosu.Game.Components;
+namespace Squadrosu.Game.UI;
 
 /// <summary>
 /// A background which offers blurring via a <see cref="BufferedContainer"/> on demand.

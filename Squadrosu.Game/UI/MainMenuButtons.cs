@@ -6,7 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
 
-namespace Squadrosu.Game.Components;
+namespace Squadrosu.Game.UI;
 
 public class MainMenuButtons : FillFlowContainer<MainMenuButton>
 {

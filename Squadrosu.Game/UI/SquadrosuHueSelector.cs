@@ -13,7 +13,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics.UserInterface;
 
-namespace Squadrosu.Game.Components;
+namespace Squadrosu.Game.UI;
 
 public class SquadrosuHueSelector : HSVColourPicker.HueSelector
 {

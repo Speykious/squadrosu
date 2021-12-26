@@ -4,7 +4,7 @@
 
 using osu.Framework.Graphics;
 using osuTK;
-using Squadrosu.Game.Components;
+using Squadrosu.Game.UI;
 using Squadrosu.Game.Sprites;
 
 namespace Squadrosu.Game.Screens;

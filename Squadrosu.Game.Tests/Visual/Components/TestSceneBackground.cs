@@ -7,7 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
-using Squadrosu.Game.Components;
+using Squadrosu.Game.UI;
 
 namespace Squadrosu.Game.Tests.Visual.Components;
 
