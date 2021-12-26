@@ -18,6 +18,7 @@ namespace Squadrosu.Game.UI;
 /// A background which offers blurring via a <see cref="BufferedContainer"/> on demand.
 /// Mostly taken from osu!'s Background class, but slightly simplified:
 /// <see href="https://github.com/ppy/osu/blob/master/osu.Game/Graphics/Backgrounds/Background.cs"/>
+/// And also with additional dim feature.
 /// </summary>
 public class Background : CompositeDrawable, IEquatable<Background>
 {
