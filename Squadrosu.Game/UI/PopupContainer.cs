@@ -2,8 +2,11 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using osu.Framework.Allocation;
+using osu.Framework.Audio;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Audio;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osuTK;
@@ -19,6 +22,9 @@ public class PopupContainer : VisibilityContainer
     protected override Container<Drawable> Content => contentContainer;
 
     protected override bool StartHidden => true;
+
+    private DrawableSample? sampleIn;
+    private DrawableSample? sampleOut;
 
     public PopupContainer()
     {
@@ -43,17 +49,28 @@ public class PopupContainer : VisibilityContainer
         Size = new Vector2(0, 0);
     }
 
+    [BackgroundDependencyLoader]
+    private void load(AudioManager audio)
+    {
+        sampleIn = new DrawableSample(audio.Samples.Get(@"dropdown-open"));
+        sampleOut = new DrawableSample(audio.Samples.Get(@"dropdown-close"));
+    }
+
     private const int pop_ms = 400;
     protected override void PopIn()
     {
-        this.FadeInFromZero(pop_ms - 100, Easing.InQuint)
-        .Then().ResizeHeightTo(FinalSize.Y, pop_ms, Easing.InOutQuint)
-        .Delay(pop_ms - 100).ResizeWidthTo(FinalSize.X, pop_ms, Easing.InOutQuint);
+        this.FadeInFromZero(pop_ms - 100, Easing.InQuint).Then()
+        .ResizeHeightTo(FinalSize.Y, pop_ms, Easing.InOutQuint)
+        .Schedule(() => sampleOut?.Play()).Delay(pop_ms - 100)
+        .ResizeWidthTo(FinalSize.X, pop_ms, Easing.InOutQuint)
+        .Schedule(() => sampleIn?.Play());
     }
     protected override void PopOut()
     {
         this.ResizeWidthTo(1, pop_ms, Easing.InOutQuint)
-        .Delay(pop_ms - 100).ResizeHeightTo(0, pop_ms, Easing.InOutQuint)
-        .Delay(pop_ms - 100).FadeOutFromOne(pop_ms - 100, Easing.OutQuint);
+        .Schedule(() => sampleIn?.Play()).Delay(pop_ms - 100)
+        .ResizeHeightTo(0, pop_ms, Easing.InOutQuint)
+        .Schedule(() => sampleOut?.Play()).Delay(pop_ms - 100)
+        .FadeOutFromOne(pop_ms - 100, Easing.OutQuint);
     }
 }
