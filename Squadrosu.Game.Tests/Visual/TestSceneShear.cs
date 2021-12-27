@@ -11,9 +11,6 @@ namespace Squadrosu.Game.Tests.Visual;
 
 public class TestSceneShear : SquadrosuTestScene
 {
-    // Add visual tests to ensure correct behaviour of your game: https://github.com/ppy/osu-framework/wiki/Development-and-Testing
-    // You can make changes to classes associated with the tests and they will recompile and update immediately.
-
     public TestSceneShear()
     {
         var logo = new SquareLogo();

@@ -13,9 +13,6 @@ namespace Squadrosu.Game.Tests.Visual.UI;
 
 public class TestSceneBackground : SquadrosuTestScene
 {
-    // Add visual tests to ensure correct behaviour of your game: https://github.com/ppy/osu-framework/wiki/Development-and-Testing
-    // You can make changes to classes associated with the tests and they will recompile and update immediately.
-
     private Background? background;
     private readonly Bindable<int> blur;
     private readonly Bindable<int> dim;
