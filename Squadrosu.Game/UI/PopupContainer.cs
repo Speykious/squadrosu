@@ -66,6 +66,7 @@ public class PopupContainer : VisibilityContainer
         .ResizeWidthTo(FinalSize.X, pop_ms, Easing.InOutQuint)
         .Schedule(() => sampleIn?.Play());
     }
+
     protected override void PopOut()
     {
         this.ResizeWidthTo(1, pop_ms, Easing.InOutQuint)
