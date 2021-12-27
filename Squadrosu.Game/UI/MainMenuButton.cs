@@ -94,8 +94,8 @@ public class MainMenuButton : Button
         Enabled.ValueChanged += enabledChanged;
         Enabled.TriggerChange();
 
-        sampleHover = new DrawableSample(audio.Samples.Get(@"default-hover"));
-        sampleClick = new DrawableSample(audio.Samples.Get(@"default-select"));
+        sampleHover = new DrawableSample(audio.Samples.Get(@"button-hover"));
+        sampleClick = new DrawableSample(audio.Samples.Get(@"button-select"));
     }
 
 
