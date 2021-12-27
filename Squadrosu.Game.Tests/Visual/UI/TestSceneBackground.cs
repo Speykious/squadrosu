@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osuTK;
 using Squadrosu.Game.UI;
 
-namespace Squadrosu.Game.Tests.Visual.Components;
+namespace Squadrosu.Game.Tests.Visual.UI;
 
 public class TestSceneBackground : SquadrosuTestScene
 {

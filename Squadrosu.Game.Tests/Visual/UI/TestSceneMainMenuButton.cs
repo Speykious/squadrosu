@@ -3,15 +3,15 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osuTK.Graphics;
 using Squadrosu.Game.UI;
 
-namespace Squadrosu.Game.Tests.Visual.Components;
+namespace Squadrosu.Game.Tests.Visual.UI;
 
-public class TestSceneSquadrosuHueSelector : SquadrosuTestScene
+public class TestSceneMainMenuButton : SquadrosuTestScene
 {
     // Add visual tests to ensure correct behaviour of your game: https://github.com/ppy/osu-framework/wiki/Development-and-Testing
     // You can make changes to classes associated with the tests and they will recompile and update immediately.
@@ -31,15 +31,11 @@ public class TestSceneSquadrosuHueSelector : SquadrosuTestScene
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Colour = Color4.DarkSlateGray,
+                    Colour = Color4Extensions.FromHex(@"404448"),
                 },
-                new Container
+                new MainMenuButton
                 {
-                    Width = 500,
-                    Height = 42,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Child = new SquadrosuHueSelector(),
+                    Text = "Hello",
                 },
             },
         });
