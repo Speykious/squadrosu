@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Audio;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
+using osu.Framework.Utils;
 using osuTK;
 using osuTK.Graphics;
 
@@ -68,9 +69,19 @@ public class PopupContainer : VisibilityContainer
     protected override void PopOut()
     {
         this.ResizeWidthTo(1, pop_ms, Easing.InOutQuint)
-        .Schedule(() => sampleIn?.Play()).Delay(pop_ms - 100)
+        .Schedule(() => playDrawableSample(sampleIn)).Delay(pop_ms - 100)
         .ResizeHeightTo(0, pop_ms, Easing.InOutQuint)
-        .Schedule(() => sampleOut?.Play()).Delay(pop_ms - 100)
+        .Schedule(() => playDrawableSample(sampleOut)).Delay(pop_ms - 100)
         .FadeOutFromOne(pop_ms - 100, Easing.OutQuint);
+    }
+
+    private void playDrawableSample(DrawableSample? sample)
+    {
+        if (sample != null)
+        {
+            double range = .08;
+            sample.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
+            sample.Play();
+        }
     }
 }
