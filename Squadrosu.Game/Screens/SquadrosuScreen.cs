@@ -23,15 +23,11 @@ public class SquadrosuScreen : Screen
 
     protected override bool OnKeyDown(KeyDownEvent e)
     {
-        if (!e.Repeat)
+        if (!e.Repeat && e.Key == Key.Escape)
         {
-            switch (e.Key)
-            {
-                case Key.Escape:
-                    OnExit();
-                    return true;
-            }
-        };
+            OnExit();
+            return true;
+        }
 
         return base.OnKeyDown(e);
     }

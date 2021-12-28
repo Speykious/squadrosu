@@ -4,35 +4,53 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Input.Events;
 using osu.Framework.Screens;
+using osuTK.Input;
 using Squadrosu.Game.Screens;
 
 namespace Squadrosu.Game;
 
 public class SquadrosuGame : SquadrosuGameBase
 {
-    private readonly ScreenStack screenStack;
+    private ScreenStack? screenStack;
+    private OptionOverlay? optionOverlay;
 
-    public SquadrosuGame() : base()
-    {
-        screenStack = new ScreenStack
-        {
-            RelativeSizeAxes = Axes.Both,
-        };
-    }
+    private DependencyContainer? dependencies;
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
+        dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
     [BackgroundDependencyLoader]
     private void load()
     {
-        // Add your top-level game components here.
-        // A screen stack and sample screen has been provided for convenience, but you can replace it if you don't want to use screens.
-        Child = screenStack;
+        optionOverlay = new OptionOverlay();
+        dependencies?.Cache(optionOverlay);
+
+        Children = new Drawable[]
+        {
+            screenStack = new ScreenStack
+            {
+                RelativeSizeAxes = Axes.Both,
+            },
+            optionOverlay,
+        };
+    }
+
+    protected override bool OnKeyDown(KeyDownEvent e)
+    {
+        if (!e.Repeat && e.Key == Key.O)
+        {
+            optionOverlay?.Show();
+            return true;
+        }
+
+        return base.OnKeyDown(e);
     }
 
     protected override void LoadComplete()
     {
         base.LoadComplete();
 
-        screenStack.Push(new SplashScreen());
+        screenStack?.Push(new SplashScreen());
     }
 }
