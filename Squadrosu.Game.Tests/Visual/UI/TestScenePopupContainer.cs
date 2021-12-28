@@ -37,7 +37,7 @@ public class TestScenePopupContainer : SquadrosuTestScene
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    FinalSize = new Vector2(400),
+                    Size = new Vector2(400),
                     Children = new Drawable[]
                     {
                         new Box

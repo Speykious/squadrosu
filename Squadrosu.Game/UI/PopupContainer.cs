@@ -15,12 +15,13 @@ using osuTK.Graphics;
 
 namespace Squadrosu.Game.UI;
 
-public class PopupContainer : OverlayContainer
+public class PopupContainer : VisibilityContainer
 {
-    public Vector2 FinalSize { get; set; }
+    private Vector2 finalSize { get; set; }
 
     private readonly Container contentContainer;
     protected override Container<Drawable> Content => contentContainer;
+    protected override bool StartHidden => true;
 
     private DrawableSample? sampleIn;
     private DrawableSample? sampleOut;
@@ -35,22 +36,20 @@ public class PopupContainer : OverlayContainer
             Radius = 20f,
         };
 
-        FinalSize = new Vector2(640, 1080);
-
         AddInternal(contentContainer = new Container
         {
-            Size = FinalSize,
+            RelativeSizeAxes = Axes.Both,
             RelativePositionAxes = Axes.Both,
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
         });
-
-        Size = new Vector2(0, 0);
     }
 
     [BackgroundDependencyLoader]
     private void load(AudioManager audio)
     {
+        finalSize = Size;
+        Size = new Vector2(0);
         sampleIn = new DrawableSample(audio.Samples.Get(@"dropdown-open"));
         sampleOut = new DrawableSample(audio.Samples.Get(@"dropdown-close"));
     }
@@ -59,15 +58,15 @@ public class PopupContainer : OverlayContainer
     protected override void PopIn()
     {
         this.FadeInFromZero(pop_ms - 100, Easing.InQuint).Then()
-        .ResizeHeightTo(FinalSize.Y, pop_ms, Easing.InOutQuint)
+        .ResizeHeightTo(finalSize.Y, pop_ms, Easing.InOutQuint)
         .Schedule(() => sampleOut?.Play()).Delay(pop_ms - 100)
-        .ResizeWidthTo(FinalSize.X, pop_ms, Easing.InOutQuint)
+        .ResizeWidthTo(finalSize.X, pop_ms, Easing.InOutQuint)
         .Schedule(() => sampleIn?.Play());
     }
 
     protected override void PopOut()
     {
-        this.ResizeWidthTo(1, pop_ms, Easing.InOutQuint)
+        this.ResizeWidthTo(RelativeSizeAxes.HasFlag(Axes.X) ? .001f : 1f, pop_ms, Easing.InOutQuint)
         .Schedule(() => playDrawableSample(sampleIn)).Delay(pop_ms - 100)
         .ResizeHeightTo(0, pop_ms, Easing.InOutQuint)
         .Schedule(() => playDrawableSample(sampleOut)).Delay(pop_ms - 100)
