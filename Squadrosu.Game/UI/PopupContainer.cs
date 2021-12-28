@@ -15,14 +15,12 @@ using osuTK.Graphics;
 
 namespace Squadrosu.Game.UI;
 
-public class PopupContainer : VisibilityContainer
+public class PopupContainer : OverlayContainer
 {
     public Vector2 FinalSize { get; set; }
 
     private readonly Container contentContainer;
     protected override Container<Drawable> Content => contentContainer;
-
-    protected override bool StartHidden => true;
 
     private DrawableSample? sampleIn;
     private DrawableSample? sampleOut;
@@ -57,7 +55,7 @@ public class PopupContainer : VisibilityContainer
         sampleOut = new DrawableSample(audio.Samples.Get(@"dropdown-close"));
     }
 
-    private const int pop_ms = 400;
+    private const int pop_ms = 250;
     protected override void PopIn()
     {
         this.FadeInFromZero(pop_ms - 100, Easing.InQuint).Then()
