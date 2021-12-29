@@ -16,7 +16,7 @@ public class MainMenuScreen : SquadrosuScreen
     private readonly MainMenuButton[] buttons;
 
     [Resolved]
-    private OptionOverlay optionOverlay { get; set; }
+    private OptionOverlay? optionOverlay { get; set; }
 
     public MainMenuScreen()
     {
