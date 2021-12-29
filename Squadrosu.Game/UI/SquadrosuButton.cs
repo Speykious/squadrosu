@@ -3,13 +3,11 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Allocation;
-using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Audio;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
@@ -27,7 +25,7 @@ namespace Squadrosu.Game.UI;
 /// </summary>
 public abstract class SquadrosuButton : Button
 {
-    protected ButtonBackground Background;
+    protected ButtonBackground? Background;
     protected SpriteText? SpriteText;
     protected override Container<Drawable> Content { get; }
     public LocalisableString Text { get; set; }
@@ -39,7 +37,7 @@ public abstract class SquadrosuButton : Button
         set
         {
             backgroundColor = value;
-            Background.FadeColour(value);
+            Background?.FadeColour(value);
         }
     }
 
@@ -64,13 +62,6 @@ public abstract class SquadrosuButton : Button
             Origin = Anchor.Centre,
             RelativeSizeAxes = Axes.Both,
             Masking = false,
-            Children = new Drawable[]
-            {
-                Background = new ButtonBackground(cornerRadius: BackgroundCornerRadius)
-                {
-                    Color = Color4Extensions.FromHex(@"323232"),
-                },
-            },
         };
 
         Enabled.BindValueChanged(enabledChanged, true);
@@ -81,6 +72,11 @@ public abstract class SquadrosuButton : Button
     private void load()
     {
         AddInternal(Content);
+
+        Add(Background = new ButtonBackground(BackgroundCornerRadius)
+        {
+            Color = Color4Extensions.FromHex(@"323232"),
+        });
         Add(SpriteText = new SpriteText
         {
             Anchor = Anchor.Centre,
@@ -105,7 +101,7 @@ public abstract class SquadrosuButton : Button
                 SampleClick.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
                 SampleClick.Play();
             }
-            Background.FlashColour(Color4.White, 200);
+            Background?.FlashColour(Color4.White, 200);
         }
 
         return base.OnClick(e);
