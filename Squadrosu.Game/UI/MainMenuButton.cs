@@ -7,6 +7,7 @@ using osu.Framework.Audio;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Audio;
 using osu.Framework.Input.Events;
+using osuTK;
 
 namespace Squadrosu.Game.UI;
 
@@ -15,7 +16,13 @@ namespace Squadrosu.Game.UI;
 /// </summary>
 public class MainMenuButton : SquadrosuButton
 {
-    public const float TextShearValue = .2f;
+    public const float GlobalTextShearX = .2f;
+
+    public MainMenuButton() : base()
+    {
+        Size = new Vector2(500, 150);
+        TextShearX = GlobalTextShearX;
+    }
 
     [BackgroundDependencyLoader]
     private void load(AudioManager audio)

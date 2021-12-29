@@ -16,6 +16,6 @@ public class MainMenuButtons : FillFlowContainer<MainMenuButton>
         Origin = Anchor.Centre;
         Direction = FillDirection.Vertical;
         Spacing = new Vector2(0, 5);
-        Shear = new Vector2(-MainMenuButton.TextShearValue, 0);
+        Shear = new Vector2(-MainMenuButton.GlobalTextShearX, 0);
     }
 }
