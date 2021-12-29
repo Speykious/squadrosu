@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osuTK;
 using Squadrosu.Game.UI;
 using Squadrosu.Game.Sprites;
+using osu.Framework.Allocation;
 
 namespace Squadrosu.Game.Screens;
 
@@ -14,8 +15,12 @@ public class MainMenuScreen : SquadrosuScreen
     private readonly Logo logo;
     private readonly MainMenuButton[] buttons;
 
+    [Resolved]
+    private OptionOverlay optionOverlay { get; set; }
+
     public MainMenuScreen()
     {
+        MainMenuButton OptionsButton;
         MainMenuButton QuitButton;
         InternalChildren = new Drawable[]
         {
@@ -42,12 +47,13 @@ public class MainMenuScreen : SquadrosuScreen
                 {
                     new MainMenuButton { Text = "Jouer" },
                     new MainMenuButton { Text = "Règles" },
-                    new MainMenuButton { Text = "Options" },
+                    OptionsButton = new MainMenuButton { Text = "Options" },
                     QuitButton = new MainMenuButton { Text = "Quitter" },
                 },
             },
         };
         QuitButton.OnClicked += OnExit;
+        OptionsButton.OnClicked += () => optionOverlay?.Show();
     }
 
     protected override void LoadComplete()
