@@ -76,7 +76,7 @@ public sealed class Game
         if (State != GameState.Playing)
             return false;
 
-        if (!Board.Move(piece, CurrentPlayer))
+        if (!Board.Move(piece))
             return false;
 
         GameActions.Add(new GameAction

@@ -7,6 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup Label="Project References">
+    <ProjectReference Include="..\Squadrosu.Framework\Squadrosu.Framework.csproj" />
+  </ItemGroup>
+
   <ItemGroup Label="Package References">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="NUnit" Version="3.13.2" />
