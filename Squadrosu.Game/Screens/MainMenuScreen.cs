@@ -16,6 +16,7 @@ public class MainMenuScreen : SquadrosuScreen
 
     public MainMenuScreen()
     {
+        MainMenuButton QuitButton;
         InternalChildren = new Drawable[]
         {
             new Background(@"default_background")
@@ -42,10 +43,11 @@ public class MainMenuScreen : SquadrosuScreen
                     new MainMenuButton { Text = "Jouer" },
                     new MainMenuButton { Text = "Règles" },
                     new MainMenuButton { Text = "Options" },
-                    new MainMenuButton { Text = "Quitter" },
-                }
-            }
+                    QuitButton = new MainMenuButton { Text = "Quitter" },
+                },
+            },
         };
+        QuitButton.OnClicked += OnExit;
     }
 
     protected override void LoadComplete()

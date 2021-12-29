@@ -2,6 +2,7 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -29,6 +30,13 @@ public abstract class SquadrosuButton : Button
     protected SpriteText? SpriteText;
     protected override Container<Drawable> Content { get; }
     public LocalisableString Text { get; set; }
+    public float TextSize { get; set; }
+
+    public float TextShearX { get; set; }
+    public float BackgroundCornerRadius { get; set; }
+    public event Action? OnClicked;
+    public event Action? OnHovered;
+
 
     private Color4 backgroundColor;
     public Color4 BackgroundColor
@@ -44,9 +52,6 @@ public abstract class SquadrosuButton : Button
     protected DrawableSample? SampleHover;
     protected DrawableSample? SampleClick;
 
-    public float TextShearX { get; set; }
-    public float BackgroundCornerRadius { get; set; }
-
     public SquadrosuButton()
     {
         Anchor = Anchor.Centre;
@@ -54,6 +59,7 @@ public abstract class SquadrosuButton : Button
         Width = 250;
         Height = 100;
         TextShearX = 0f;
+        TextSize = 50f;
         BackgroundCornerRadius = 0f;
 
         Content = new Container
@@ -83,7 +89,7 @@ public abstract class SquadrosuButton : Button
             Origin = Anchor.Centre,
             Shear = new Vector2(TextShearX, 0),
             Padding = new MarginPadding(20),
-            Font = FontUsage.Default.With(size: 80),
+            Font = FontUsage.Default.With(size: TextSize),
             Text = Text,
         });
 
@@ -102,6 +108,7 @@ public abstract class SquadrosuButton : Button
                 SampleClick.Play();
             }
             Background?.FlashColour(Color4.White, 200);
+            OnClicked?.Invoke();
         }
 
         return base.OnClick(e);
@@ -117,6 +124,7 @@ public abstract class SquadrosuButton : Button
                 SampleHover.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
                 SampleHover.Play();
             }
+            OnHovered?.Invoke();
         }
 
         return base.OnHover(e);
