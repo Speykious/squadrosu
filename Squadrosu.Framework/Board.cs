@@ -33,8 +33,8 @@ public sealed class Board
     {
         for (int i = 0; i < 5; i++)
         {
-            Black[i] = new Piece(Player.Black, i + 1);
-            White[i] = new Piece(Player.White, i + 1);
+            Black[i] = new Piece(Player.Black, i + 1, this);
+            White[i] = new Piece(Player.White, i + 1, this);
         }
         Reset();
     }
@@ -71,17 +71,17 @@ public sealed class Board
     /// <returns>The winning <see cref="Player"/>, or null if the game is still ongoing.</returns>
     public Player? PlayerWon()
     {
-        int cptw = 0, cptb = 0;
+        int finidhedWhites = 0, finidhedBlacks = 0;
         for (int i = 0; i < 5; i++)
         {
             if (White[i].Direction == Direction.Finished)
-                cptw++;
+                finidhedWhites++;
             if (Black[i].Direction == Direction.Finished)
-                cptb++;
+                finidhedBlacks++;
         }
-        if (cptw >= 4)
+        if (finidhedWhites >= 4)
             return Player.White;
-        else if (cptb >= 4)
+        else if (finidhedBlacks >= 4)
             return Player.Black;
         else
             return null;
