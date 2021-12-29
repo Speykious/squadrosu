@@ -31,6 +31,11 @@ public sealed class Board
 
     public Board()
     {
+        for (int i = 0; i < 5; i++)
+        {
+            Black[i] = new Piece(Player.Black, i + 1);
+            White[i] = new Piece(Player.White, i + 1);
+        }
         Reset();
     }
 
@@ -41,11 +46,10 @@ public sealed class Board
     {
         for (int i = 0; i < 5; i++)
         {
-            White[i] = new Piece(Player.White, i + 1);
-            Positions[0, i + 1] = White[i];
-            Black[i] = new Piece(Player.Black, i + 1);
-            Positions[i + 1, 0] = Black[i];
+            Black[i].Reset();
+            White[i].Reset();
         }
+        this.Update();
     }
     /// <summary>
     /// Updates the positions on the board
