@@ -47,6 +47,7 @@ public abstract class SquadrosuButton : Button
     protected DrawableSample? SampleClick;
 
     public float TextShearX { get; set; }
+    public float BackgroundCornerRadius { get; set; }
 
     public SquadrosuButton()
     {
@@ -55,6 +56,7 @@ public abstract class SquadrosuButton : Button
         Width = 250;
         Height = 100;
         TextShearX = 0f;
+        BackgroundCornerRadius = 0f;
 
         Content = new Container
         {
@@ -64,7 +66,7 @@ public abstract class SquadrosuButton : Button
             Masking = false,
             Children = new Drawable[]
             {
-                Background = new ButtonBackground(cornerRadius: 30)
+                Background = new ButtonBackground(cornerRadius: BackgroundCornerRadius)
                 {
                     Color = Color4Extensions.FromHex(@"323232"),
                 },

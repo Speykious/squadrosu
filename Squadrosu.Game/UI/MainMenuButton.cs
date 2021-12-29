@@ -22,6 +22,7 @@ public class MainMenuButton : SquadrosuButton
     {
         Size = new Vector2(500, 150);
         TextShearX = GlobalTextShearX;
+        BackgroundCornerRadius = 30f;
     }
 
     [BackgroundDependencyLoader]

@@ -13,6 +13,11 @@ namespace Squadrosu.Game.UI;
 /// </summary>
 public class BasicSquadrosuButton : SquadrosuButton
 {
+    public BasicSquadrosuButton() : base()
+    {
+        BackgroundCornerRadius = 10f;
+    }
+
     [BackgroundDependencyLoader]
     private void load(AudioManager audio)
     {
