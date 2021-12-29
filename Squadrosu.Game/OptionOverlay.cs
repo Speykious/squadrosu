@@ -27,6 +27,7 @@ public class OptionOverlay : VisibilityContainer
         RelativePositionAxes = Axes.Both;
         RelativeSizeAxes = Axes.Both;
 
+        BasicSquadrosuButton OkButton;
         AddRangeInternal(new Drawable[]
         {
             backgroundDimmer = new Box
@@ -52,37 +53,92 @@ public class OptionOverlay : VisibilityContainer
                         RelativeSizeAxes = Axes.Both,
                         Colour = Color4Extensions.FromHex(@"1b1b1bbb"),
                     },
-                    contentContainer = new Container<Drawable>
+                    new Container
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding(20),
-                    },
-                    new Container<Drawable>
-                    {
-                        Anchor = Anchor.BottomRight,
-                        Origin = Anchor.BottomRight,
-                        RelativeSizeAxes = Axes.X,
-                        Height = 100,
                         Children = new Drawable[]
                         {
-                            new Box
-                            {
-                                RelativeSizeAxes = Axes.Both,
-                                Colour = Color4Extensions.FromHex(@"2b2b2b"),
-                            },
-                            new SpriteText
+                            // Content
+                            contentContainer = new Container
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Text = @"This is a Footer",
+                                RelativeSizeAxes = Axes.Both,
+                                Padding = new MarginPadding(20),
                             },
-                        }
-                    }
+                            // Header
+                            new Container
+                            {
+                                Anchor = Anchor.TopCentre,
+                                Origin = Anchor.TopCentre,
+                                RelativeSizeAxes = Axes.X,
+                                Height = 100,
+                                Children = new Drawable[]
+                                {
+                                    new Box
+                                    {
+                                        RelativeSizeAxes = Axes.Both,
+                                        Colour = Color4Extensions.FromHex(@"1b1b1b"),
+                                    },
+                                    new SpriteText
+                                    {
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre,
+                                        Text = "Options",
+                                        Font = FontUsage.Default.With(size: 80, weight: "bold"),
+                                    },
+                                },
+                            },
+                            // Footer
+                            new Container
+                            {
+                                Anchor = Anchor.BottomCentre,
+                                Origin = Anchor.BottomCentre,
+                                RelativeSizeAxes = Axes.X,
+                                Height = 100,
+                                Children = new Drawable[]
+                                {
+                                    new Box
+                                    {
+                                        RelativeSizeAxes = Axes.Both,
+                                        Colour = Color4Extensions.FromHex(@"1b1b1b"),
+                                    },
+                                    new FillFlowContainer
+                                    {
+                                        Anchor = Anchor.Centre,
+                                        Origin = Anchor.Centre,
+                                        RelativeSizeAxes = Axes.Both,
+                                        Direction = FillDirection.Horizontal,
+                                        Padding = new MarginPadding(20),
+                                        Spacing = new Vector2(10),
+                                        Children = new Drawable[]
+                                        {
+                                            OkButton = new BasicSquadrosuButton
+                                            {
+                                                Anchor = Anchor.CentreRight,
+                                                Origin = Anchor.CentreRight,
+                                                Size = new Vector2(200, 70),
+                                                Text = "Ok",
+                                            },
+                                            new SpriteText
+                                            {
+                                                Anchor = Anchor.CentreRight,
+                                                Origin = Anchor.CentreRight,
+                                                Text = @"This is a Footer",
+                                                Font = FontUsage.Default.With(size: 50),
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
             },
         });
+        OkButton.OnClicked += Hide;
     }
 
     protected override void PopIn()
