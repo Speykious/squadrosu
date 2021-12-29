@@ -38,10 +38,19 @@ public class Piece
     /// <summary>
     /// The piece returns to the initial position of the direction
     /// </summary>
-    public void Reset()
+    public void PlaceOnEdge()
     {
         this.Position = (this.Direction == Direction.Forward) ? 0 : 6;
     }
+    /// <summary>
+    /// Place the piece on edge
+    /// </summary>
+    public void Reset()
+    {
+        Direction = Direction.Forward;
+        PlaceOnEdge();
+    }
+
     /// <summary>
     /// Returns the step of a piece in a given state
     /// </summary>
@@ -87,7 +96,7 @@ public class Piece
                 {
                     while (board.Positions[this.LineNumber, i + 1] != null)
                     {
-                        board.Positions[this.LineNumber, i + 1].Reset();
+                        board.Positions[this.LineNumber, i + 1].PlaceOnEdge();
                         newPosition = i + 2;
                         i++;
                     }
@@ -100,7 +109,7 @@ public class Piece
                 {
                     while (board.Positions[i + 1, this.LineNumber] != null)
                     {
-                        board.Positions[i + 1, this.LineNumber].Reset();
+                        board.Positions[i + 1, this.LineNumber].PlaceOnEdge();
                         newPosition = i + 2;
                         i++;
                     }
