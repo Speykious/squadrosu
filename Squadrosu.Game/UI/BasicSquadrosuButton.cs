@@ -11,7 +11,7 @@ namespace Squadrosu.Game.UI;
 /// <summary>
 /// Pretty button for the main menu. Has heavy samples and moves a bit to the left on hover.
 /// </summary>
-public class BasicButton : SquadrosuButton
+public class BasicSquadrosuButton : SquadrosuButton
 {
     [BackgroundDependencyLoader]
     private void load(AudioManager audio)
