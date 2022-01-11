@@ -71,13 +71,13 @@ public sealed class Board
     /// <returns>The winning <see cref="Player"/>, or null if the game is still ongoing.</returns>
     public Player? PlayerWon()
     {
-        int finidhedWhites = 0, finidhedBlacks = 0;
+        int finishedWhites = 0, finishedBlacks = 0;
         for (int i = 0; i < 5; i++)
         {
             if (White[i].Direction == Direction.Finished)
-                finidhedWhites++;
+                finishedWhites++;
             if (Black[i].Direction == Direction.Finished)
-                finidhedBlacks++;
+                finishedBlacks++;
         }
         if (finidhedWhites >= 4)
             return Player.White;

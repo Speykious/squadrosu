@@ -19,16 +19,16 @@ public sealed class TestBoard
 
         for (int i = 0; i <= 5; i++)
         {
-            (board.White[0]).Move(board);
-            board.White[4].Move(board);
+            (board.White[0]).Move();
+            board.White[4].Move();
         }
         for (int i = 0; i < 3; i++)
         {
-            board.Black[2].Move(board);
+            board.Black[2].Move();
         }
-        board.White[4].Move(board);
-        board.Black[2].Move(board);
-        board.White[4].Move(board);
+        board.White[4].Move();
+        board.Black[2].Move();
+        board.White[4].Move();
         TestContext.Progress.WriteLine(board);
     }
 }

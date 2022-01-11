@@ -31,13 +31,13 @@ public class Piece
     /// </summary>
     public readonly Board Board;
 
-    public Piece(Player Player, int LineNumber, Board Board)
+    public Piece(Player player, int lineNumber, Board board)
     {
         Direction = Direction.Forward;
         Position = 0;
-        this.LineNumber = LineNumber;
-        this.Player = Player;
-        this.Board = Board;
+        LineNumber = lineNumber;
+        Player = player;
+        Board = board;
     }
 
     /// <summary>
