@@ -3,8 +3,6 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using System;
-using System.Dynamic;
-using System.Runtime.CompilerServices;
 
 namespace Squadrosu.Framework;
 
@@ -45,7 +43,7 @@ public class Piece
     /// </summary>
     public void PlaceOnEdge()
     {
-        this.Position = (this.Direction == Direction.Forward) ? 0 : 6;
+        Position = (Direction == Direction.Forward) ? 0 : 6;
     }
     /// <summary>
     /// Place the piece on edge
@@ -76,10 +74,10 @@ public class Piece
     /// </summary>
     public void Move()
     {
-        if (this.Direction == Direction.Forward)
-            this.moveForward();
-        else if (this.Direction == Direction.Backward)
-            this.moveBackward();
+        if (Direction == Direction.Forward)
+            moveForward();
+        else if (Direction == Direction.Backward)
+            moveBackward();
     }
 
     /// <summary>
@@ -88,28 +86,28 @@ public class Piece
     /// <param name="board">The current board</param>
     private void moveForward()
     {
-        int step = this.Step();
-        int newPosition = Math.Min(this.Position + step, 6);
-        bool isBlack = (this.Player == Player.Black);
-        int i = this.Position;
+        int step = Step();
+        int newPosition = Math.Min(Position + step, 6);
+        bool isBlack = (Player == Player.Black);
+        int i = Position;
 
-        while (i + 1 <= Math.Min(this.Position + step, 5))
+        while (i + 1 <= Math.Min(Position + step, 5))
         {
-            if (isBlack && this.Board.Positions[this.LineNumber, i + 1] != null)
+            if (isBlack && Board.Positions[LineNumber, i + 1] != null)
             {
-                while (this.Board.Positions[this.LineNumber, i + 1] != null)
+                while (Board.Positions[LineNumber, i + 1] != null)
                 {
-                    this.Board.Positions[this.LineNumber, i + 1].PlaceOnEdge();
+                    Board.Positions[LineNumber, i + 1].PlaceOnEdge();
                     newPosition = i + 2;
                     i++;
                 }
                 i = 7;
             }
-            else if (this.Board.Positions[i + 1, this.LineNumber] != null)
+            else if (Board.Positions[i + 1, LineNumber] != null)
             {
-                while (this.Board.Positions[i + 1, this.LineNumber] != null)
+                while (Board.Positions[i + 1, LineNumber] != null)
                 {
-                    this.Board.Positions[i + 1, this.LineNumber].PlaceOnEdge();
+                    Board.Positions[i + 1, LineNumber].PlaceOnEdge();
                     newPosition = i + 2;
                     i++;
                 }
@@ -118,10 +116,10 @@ public class Piece
             i++;
         }
 
-        this.Position = newPosition;
+        Position = newPosition;
         if (newPosition == 6)
-            this.Direction = Direction.Backward;
-        this.Board.Update();
+            Direction = Direction.Backward;
+        Board.Update();
     }
 
     /// <summary>
@@ -130,28 +128,28 @@ public class Piece
     /// <param name="board">The current Board</param>
     private void moveBackward()
     {
-        int step = this.Step();
-        int newPosition = Math.Max(this.Position - step, 0);
-        bool isBlack = (this.Player == Player.Black);
-        int i = this.Position;
+        int step = Step();
+        int newPosition = Math.Max(Position - step, 0);
+        bool isBlack = (Player == Player.Black);
+        int i = Position;
 
-        while (i - 1 >= Math.Max(this.Position - step, 1))
+        while (i - 1 >= Math.Max(Position - step, 1))
         {
-            if (isBlack && this.Board.Positions[this.LineNumber, i - 1] != null)
+            if (isBlack && Board.Positions[LineNumber, i - 1] != null)
             {
-                while (this.Board.Positions[this.LineNumber, i - 1] != null)
+                while (Board.Positions[LineNumber, i - 1] != null)
                 {
-                    this.Board.Positions[this.LineNumber, i - 1].Reset();
+                    Board.Positions[LineNumber, i - 1].Reset();
                     newPosition = i - 2;
                     i--;
                 }
                 i = -1;
             }
-            else if (this.Board.Positions[i - 1, this.LineNumber] != null)
+            else if (Board.Positions[i - 1, LineNumber] != null)
             {
-                while (this.Board.Positions[i - 1, this.LineNumber] != null)
+                while (Board.Positions[i - 1, LineNumber] != null)
                 {
-                    this.Board.Positions[i - 1, this.LineNumber].Reset();
+                    Board.Positions[i - 1, LineNumber].Reset();
                     newPosition = i - 2;
                     i--;
                 }
@@ -160,10 +158,10 @@ public class Piece
             i--;
         }
 
-        this.Position = newPosition;
+        Position = newPosition;
         if (newPosition == 0)
-            this.Direction = Direction.Finished;
-        this.Board.Update();
+            Direction = Direction.Finished;
+        Board.Update();
     }
 
 

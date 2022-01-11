@@ -2,11 +2,6 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
-using System;
-using System.Dynamic;
-using System.Reflection.Metadata.Ecma335;
-using System.Xml;
-
 namespace Squadrosu.Framework;
 
 /// <summary>
@@ -49,14 +44,14 @@ public sealed class Board
             Black[i].Reset();
             White[i].Reset();
         }
-        this.Update();
+        Update();
     }
     /// <summary>
     /// Updates the positions on the board
     /// </summary>
     public void Update()
     {
-        this.Positions = new Piece[7, 7];
+        Positions = new Piece[7, 7];
         for (int i = 0; i < 5; i++)
         {
             Positions[White[i].Position, White[i].LineNumber] = White[i];
@@ -79,9 +74,9 @@ public sealed class Board
             if (Black[i].Direction == Direction.Finished)
                 finishedBlacks++;
         }
-        if (finidhedWhites >= 4)
+        if (finishedWhites >= 4)
             return Player.White;
-        else if (finidhedBlacks >= 4)
+        else if (finishedBlacks >= 4)
             return Player.Black;
         else
             return null;
