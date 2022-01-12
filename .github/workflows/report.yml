@@ -1,0 +1,29 @@
+name: Report
+on:
+  workflow_run:
+    workflows: [ 'Continuous Integration' ]
+    branches:
+      - '*'
+    types:
+      - completed
+
+jobs:
+  report:
+    name: Report
+    runs-on: ${{ matrix.os.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: Windows, runner: windows-latest }
+          - { name: MacOS, runner: macos-latest }
+          - { name: Linux, runner: ubuntu-latest }
+    if: ${{ github.event.workflow_run.conclusion != 'cancelled' }}
+    steps:
+      - name: Report
+        uses: dorny/test-reporter@v1
+        with:
+          artifact: TestResults-${{ matrix.os.name }}
+          name: Test Results
+          path: "*.trx"
+          reporter: dotnet-trx

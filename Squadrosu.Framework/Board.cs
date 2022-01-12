@@ -10,26 +10,26 @@ namespace Squadrosu.Framework;
 public sealed class Board
 {
     /// <summary>
-    /// List of White Pieces
+    /// White pieces.
     /// </summary>
-    public Piece[] White { get; private set; } = new Piece[5];
+    public Piece[] Whites { get; private set; } = new Piece[5];
 
     /// <summary>
-    /// List of Black Pieces
+    /// Black pieces.
     /// </summary>
-    public Piece[] Black { get; private set; } = new Piece[5];
+    public Piece[] Blacks { get; private set; } = new Piece[5];
 
     /// <summary>
-    /// The board itself, and positions of pieces
+    /// Grid where pieces are placed and moved.
     /// </summary>
-    public Piece?[,] Positions { get; private set; } = new Piece[7, 7];
+    public Piece?[,] Grid { get; private set; } = new Piece[7, 7];
 
     public Board()
     {
         for (int i = 0; i < 5; i++)
         {
-            Black[i] = new Piece(Player.Black, i + 1, this);
-            White[i] = new Piece(Player.White, i + 1, this);
+            Blacks[i] = new Piece(Player.Black, i + 1, this);
+            Whites[i] = new Piece(Player.White, i + 1, this);
         }
         Reset();
     }
@@ -41,8 +41,8 @@ public sealed class Board
     {
         for (int i = 0; i < 5; i++)
         {
-            Black[i].Reset();
-            White[i].Reset();
+            Blacks[i].Reset();
+            Whites[i].Reset();
         }
         Update();
     }
@@ -51,12 +51,11 @@ public sealed class Board
     /// </summary>
     public void Update()
     {
-        Positions = new Piece[7, 7];
+        Grid = new Piece[7, 7];
         for (int i = 0; i < 5; i++)
         {
-            Positions[White[i].Position, White[i].LineNumber] = White[i];
-
-            Positions[Black[i].LineNumber, Black[i].Position] = Black[i];
+            Grid[Whites[i].Position, Whites[i].LineNumber] = Whites[i];
+            Grid[Blacks[i].LineNumber, Blacks[i].Position] = Blacks[i];
         }
     }
 
@@ -69,11 +68,12 @@ public sealed class Board
         int finishedWhites = 0, finishedBlacks = 0;
         for (int i = 0; i < 5; i++)
         {
-            if (White[i].Direction == Direction.Finished)
+            if (Whites[i].Direction == Direction.Finished)
                 finishedWhites++;
-            if (Black[i].Direction == Direction.Finished)
+            if (Blacks[i].Direction == Direction.Finished)
                 finishedBlacks++;
         }
+
         if (finishedWhites >= 4)
             return Player.White;
         else if (finishedBlacks >= 4)
@@ -88,7 +88,7 @@ public sealed class Board
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 7; j++)
-                s += (Positions[i, j]?.ToString() ?? "_") + " ";
+                s += (Grid[i, j]?.ToString() ?? "_") + " ";
             s += "\n";
         }
 

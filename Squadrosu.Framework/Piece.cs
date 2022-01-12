@@ -25,6 +25,24 @@ public class Piece
     /// </summary>
     public readonly int LineNumber;
     /// <summary>
+    /// Returns the step of a piece in a given state
+    /// </summary>
+    /// <returns>How many squares the piece can go through</returns>
+    public int Step
+    {
+        get
+        {
+            if (LineNumber == 3)
+                return 2;
+
+            bool isBlack = Player == Player.Black;
+            bool isForward = Direction == Direction.Forward;
+            bool isOnEdge = LineNumber == 1 || LineNumber == 5;
+            return isBlack ^ isForward ^ isOnEdge ? 3 : 1;
+        }
+    }
+
+    /// <summary>
     /// The board in which the piece plays
     /// </summary>
     public readonly Board Board;
@@ -55,21 +73,6 @@ public class Piece
     }
 
     /// <summary>
-    /// Returns the step of a piece in a given state
-    /// </summary>
-    /// <returns>How many squares the piece can go through</returns>
-    public int Step()
-    {
-        if (LineNumber == 3)
-            return 2;
-
-        bool isBlack = Player == Player.Black;
-        bool isForward = Direction == Direction.Forward;
-        bool isOnEdge = LineNumber == 1 || LineNumber == 5;
-        return isBlack ^ isForward ^ isOnEdge ? 3 : 1;
-    }
-
-    /// <summary>
     /// Move the position of the piece
     /// </summary>
     public void Move()
@@ -86,17 +89,16 @@ public class Piece
     /// <param name="board">The current board</param>
     private void moveForward()
     {
-        int step = Step();
-        int newPosition = Math.Min(Position + step, 6);
+        int newPosition = Math.Min(Position + Step, 6);
         bool isBlack = Player == Player.Black;
-        int i = Position;
         Piece? piece;
 
-        while (i + 1 <= Math.Min(Position + step, 5))
+        int i = Position;
+        while (i + 1 <= Math.Min(Position + Step, 5))
         {
-            if (isBlack && Board.Positions[LineNumber, i + 1] != null)
+            if (isBlack && Board.Grid[LineNumber, i + 1] != null)
             {
-                while ((piece = Board.Positions[LineNumber, i + 1]) != null)
+                while ((piece = Board.Grid[LineNumber, i + 1]) != null)
                 {
                     piece.PlaceOnEdge();
                     newPosition = i + 2;
@@ -104,9 +106,9 @@ public class Piece
                 }
                 i = 7;
             }
-            else if (Board.Positions[i + 1, LineNumber] != null)
+            else if (Board.Grid[i + 1, LineNumber] != null)
             {
-                while ((piece = Board.Positions[i + 1, LineNumber]) != null)
+                while ((piece = Board.Grid[i + 1, LineNumber]) != null)
                 {
                     piece.PlaceOnEdge();
                     newPosition = i + 2;
@@ -129,17 +131,16 @@ public class Piece
     /// <param name="board">The current Board</param>
     private void moveBackward()
     {
-        int step = Step();
-        int newPosition = Math.Max(Position - step, 0);
+        int newPosition = Math.Max(Position - Step, 0);
         bool isBlack = Player == Player.Black;
-        int i = Position;
         Piece? piece;
 
-        while (i - 1 >= Math.Max(Position - step, 1))
+        int i = Position;
+        while (i - 1 >= Math.Max(Position - Step, 1))
         {
-            if (isBlack && Board.Positions[LineNumber, i - 1] != null)
+            if (isBlack && Board.Grid[LineNumber, i - 1] != null)
             {
-                while ((piece = Board.Positions[LineNumber, i - 1]) != null)
+                while ((piece = Board.Grid[LineNumber, i - 1]) != null)
                 {
                     piece.Reset();
                     newPosition = i - 2;
@@ -147,9 +148,9 @@ public class Piece
                 }
                 i = -1;
             }
-            else if (Board.Positions[i - 1, LineNumber] != null)
+            else if (Board.Grid[i - 1, LineNumber] != null)
             {
-                while ((piece = Board.Positions[i - 1, LineNumber]) != null)
+                while ((piece = Board.Grid[i - 1, LineNumber]) != null)
                 {
                     piece.Reset();
                     newPosition = i - 2;
@@ -165,7 +166,6 @@ public class Piece
             Direction = Direction.Finished;
         Board.Update();
     }
-
 
     public override string ToString() => Player == Player.Black ? "B" : "W";
 }

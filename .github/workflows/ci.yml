@@ -1,0 +1,48 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+
+env:
+  PROJECT_NAME: Squadrosu.Framework
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: Windows, runner: windows-latest }
+          - { name: MacOS, runner: macos-latest }
+          - { name: Linux, runner: ubuntu-latest }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Build Framework
+        run: dotnet build -c Debug ${{ env.PROJECT_NAME }}
+
+      - name: Test Framework
+        run: dotnet test ${{ env.PROJECT_NAME }}.Test --logger "trx;LogFileName=TestResults-${{ matrix.os.name }}.trx"
+
+      - name: Upload test artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: TestResults-${{ matrix.os.name }}
+          path: ${{ env.PROJECT_NAME }}.Test/TestResults/*.trx
