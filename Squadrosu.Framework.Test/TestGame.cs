@@ -13,6 +13,12 @@ public sealed class TestGame
     private static readonly int[] white_steps = new int[] { 1, 3, 2, 3, 1 };
     private static readonly int[] black_steps = new int[] { 3, 1, 2, 1, 3 };
 
+    private static void multipleMove(Piece piece, int nb)
+    {
+        for (int i = 0; i < nb; i++)
+            piece.Move();
+    }
+
     [Test]
     public static void BoardIsCorrectlyInitialized()
     {
@@ -64,5 +70,43 @@ public sealed class TestGame
             Assert.AreEqual(piece.Step, black_steps[i]);
             Assert.AreEqual(piece.Position, piece.Step);
         }
+    }
+
+    [Test]
+    public static void RulesCorrectlyImplemented()
+    {
+        Board board = new Board();
+        board.Whites[0].Move();
+        board.Whites[2].Move();
+        board.Whites[3].Move();
+        TestContext.Progress.WriteLine($"Black steps\n{board}");
+        multipleMove(board.Blacks[0], 1);
+        multipleMove(board.Blacks[2], 2);
+        multipleMove(board.Blacks[1], 3);
+        TestContext.Progress.WriteLine($"Black steps\n{board}");
+        for (int i = 0; i < 5; i++)
+        {
+            Assert.AreEqual(board.Whites[i].Position, 0);
+        }
+        Assert.AreEqual(board.Blacks[0].Position, 2);
+        Assert.AreEqual(board.Blacks[1].Position, 4);
+        Assert.AreEqual(board.Blacks[2].Position, 5);
+
+    }
+
+    [Test]
+    public static void ChangeDirectionWorking()
+    {
+        Board board = new Board();
+        Assert.AreEqual(board.Blacks[0].Direction, Direction.Forward);
+        Assert.AreEqual(board.Whites[2].Direction, Direction.Forward);
+        multipleMove(board.Blacks[0], 2);
+        multipleMove(board.Whites[2], 3);
+        Assert.AreEqual(board.Blacks[0].Direction, Direction.Backward);
+        Assert.AreEqual(board.Whites[2].Direction, Direction.Backward);
+        multipleMove(board.Blacks[0], 6);
+        multipleMove(board.Whites[2], 3);
+        Assert.AreEqual(board.Blacks[0].Direction, Direction.Finished);
+        Assert.AreEqual(board.Whites[2].Direction, Direction.Finished);
     }
 }
