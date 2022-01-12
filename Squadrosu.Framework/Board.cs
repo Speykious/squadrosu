@@ -88,12 +88,7 @@ public sealed class Board
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 7; j++)
-            {
-                if (Positions[i, j] != null)
-                    s += Positions[i, j] + "\t";
-                else
-                    s += "X\t";
-            }
+                s += (Positions[i, j]?.ToString() ?? "_") + " ";
             s += "\n";
         }
 
