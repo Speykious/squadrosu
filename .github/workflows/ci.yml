@@ -56,14 +56,10 @@ jobs:
           name: TestResults-${{ matrix.os.name }}
           path: ${{ github.workspace }}/TestResults/
 
-      - name: What
-        run: ls -lARh ${{ github.workspace }}/TestResults/
-        shell: bash
-
       - name: Report
         uses: dorny/test-reporter@v1.4.2
         with:
           artifact: TestResults-${{ matrix.os.name }}
-          name: Test Results
-          path: ${{ github.workspace }}/TestResults/*.trx
+          name: Test Results (${{ matrix.os.name }})
+          path: ${{ github.workspace }}/TestResults/TestResults-${{ matrix.os.name }}.trx
           reporter: dotnet-trx
