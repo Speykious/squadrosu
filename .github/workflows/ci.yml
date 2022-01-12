@@ -24,11 +24,11 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
-      - name: Build
+      - name: Build Framework
         run: dotnet build -c Debug ${{ env.PROJECT_NAME }}
 
       - name: Test Framework
-        run: dotnet test "${{ env.PROJECT_NAME }}.Tests" --logger "trx;LogFileName=TestResults-${{ matrix.os.name }}.trx"
+        run: dotnet test ${{ env.PROJECT_NAME }}.Test --logger "trx;LogFileName=TestResults-${{ matrix.os.name }}.trx"
 
       - name: Upload test artifact
         uses: actions/upload-artifact@v2
