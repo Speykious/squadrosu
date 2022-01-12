@@ -35,13 +35,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: TestResults-${{ matrix.os.name }}
-          path: ${{ env.PROJECT_NAME }}.Test/TestResults/TestResults-${{ matrix.os.name }}.trx
-
-      - name: Report
-        uses: dorny/test-reporter@v1.4.2
-        if: ${{ always() }}
-        with:
-          artifact: TestResults-${{ matrix.os.name }}
-          name: Test Results (${{ matrix.os.name }})
-          path: ${{ env.PROJECT_NAME }}.Test/TestResults/TestResults-${{ matrix.os.name }}.trx
-          reporter: dotnet-trx
+          path: ${{ env.PROJECT_NAME }}.Test/TestResults/*.trx
