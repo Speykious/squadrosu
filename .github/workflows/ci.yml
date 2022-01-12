@@ -37,23 +37,11 @@ jobs:
           name: TestResults-${{ matrix.os.name }}
           path: ${{ env.PROJECT_NAME }}.Test/TestResults/TestResults-${{ matrix.os.name }}.trx
 
-  report:
-    name: Report
-    runs-on: ${{ matrix.os.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - { name: Windows, runner: windows-latest }
-          - { name: MacOS, runner: macos-latest }
-          - { name: Linux, runner: ubuntu-latest }
-    needs: test
-    if: ${{ always() }}
-    steps:
       - name: Report
         uses: dorny/test-reporter@v1.4.2
+        if: ${{ always() }}
         with:
           artifact: TestResults-${{ matrix.os.name }}
           name: Test Results (${{ matrix.os.name }})
-          path: TestResults-${{ matrix.os.name }}.trx
+          path: ${{ env.PROJECT_NAME }}.Test/TestResults/TestResults-${{ matrix.os.name }}.trx
           reporter: dotnet-trx
