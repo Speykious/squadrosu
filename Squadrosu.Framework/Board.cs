@@ -22,7 +22,7 @@ public sealed class Board
     /// <summary>
     /// Grid where pieces are placed and moved.
     /// </summary>
-    public Piece?[,] Positions { get; private set; } = new Piece[7, 7];
+    public Piece?[,] Grid { get; private set; } = new Piece[7, 7];
 
     public Board()
     {
@@ -51,11 +51,11 @@ public sealed class Board
     /// </summary>
     public void Update()
     {
-        Positions = new Piece[7, 7];
+        Grid = new Piece[7, 7];
         for (int i = 0; i < 5; i++)
         {
-            Positions[Whites[i].Position, Whites[i].LineNumber] = Whites[i];
-            Positions[Blacks[i].LineNumber, Blacks[i].Position] = Blacks[i];
+            Grid[Whites[i].Position, Whites[i].LineNumber] = Whites[i];
+            Grid[Blacks[i].LineNumber, Blacks[i].Position] = Blacks[i];
         }
     }
 
@@ -88,7 +88,7 @@ public sealed class Board
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 7; j++)
-                s += (Positions[i, j]?.ToString() ?? "_") + " ";
+                s += (Grid[i, j]?.ToString() ?? "_") + " ";
             s += "\n";
         }
 

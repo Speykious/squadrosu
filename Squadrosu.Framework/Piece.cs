@@ -94,9 +94,9 @@ public class Piece
         int i = Position;
         while (i + 1 <= Math.Min(Position + step, 5))
         {
-            if (isBlack && Board.Positions[LineNumber, i + 1] != null)
+            if (isBlack && Board.Grid[LineNumber, i + 1] != null)
             {
-                while ((piece = Board.Positions[LineNumber, i + 1]) != null)
+                while ((piece = Board.Grid[LineNumber, i + 1]) != null)
                 {
                     piece.PlaceOnEdge();
                     newPosition = i + 2;
@@ -104,9 +104,9 @@ public class Piece
                 }
                 i = 7;
             }
-            else if (Board.Positions[i + 1, LineNumber] != null)
+            else if (Board.Grid[i + 1, LineNumber] != null)
             {
-                while ((piece = Board.Positions[i + 1, LineNumber]) != null)
+                while ((piece = Board.Grid[i + 1, LineNumber]) != null)
                 {
                     piece.PlaceOnEdge();
                     newPosition = i + 2;
@@ -137,9 +137,9 @@ public class Piece
         int i = Position;
         while (i - 1 >= Math.Max(Position - step, 1))
         {
-            if (isBlack && Board.Positions[LineNumber, i - 1] != null)
+            if (isBlack && Board.Grid[LineNumber, i - 1] != null)
             {
-                while ((piece = Board.Positions[LineNumber, i - 1]) != null)
+                while ((piece = Board.Grid[LineNumber, i - 1]) != null)
                 {
                     piece.Reset();
                     newPosition = i - 2;
@@ -147,9 +147,9 @@ public class Piece
                 }
                 i = -1;
             }
-            else if (Board.Positions[i - 1, LineNumber] != null)
+            else if (Board.Grid[i - 1, LineNumber] != null)
             {
-                while ((piece = Board.Positions[i - 1, LineNumber]) != null)
+                while ((piece = Board.Grid[i - 1, LineNumber]) != null)
                 {
                     piece.Reset();
                     newPosition = i - 2;
@@ -165,7 +165,6 @@ public class Piece
             Direction = Direction.Finished;
         Board.Update();
     }
-
 
     public override string ToString() => Player == Player.Black ? "B" : "W";
 }
