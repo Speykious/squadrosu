@@ -4,18 +4,17 @@ name: Continuous Integration
 env:
   PROJECT_NAME: Squadrosu.Framework
 
-strategy:
-  fail-fast: false
-  matrix:
-    os:
-      - { name: Windows, runner: windows-latest }
-      - { name: MacOS, runner: macos-latest }
-      - { name: Linux, runner: ubuntu-latest }
-
 jobs:
   test:
     name: Test
     runs-on: ${{ matrix.os.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: Windows, runner: windows-latest }
+          - { name: MacOS, runner: macos-latest }
+          - { name: Linux, runner: ubuntu-latest }
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -38,8 +37,15 @@ jobs:
           path: TestResults-${{ matrix.os.name }}.trx
 
   report:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os.runner }}
     needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: Windows, runner: windows-latest }
+          - { name: MacOS, runner: macos-latest }
+          - { name: Linux, runner: ubuntu-latest }
     steps:
       - name: Download test artifact
         uses: actions/download-artifact@v2
