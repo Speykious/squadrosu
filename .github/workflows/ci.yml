@@ -35,31 +35,36 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: TestResults-${{ matrix.os.name }}
-          path: TestResults-${{ matrix.os.name }}.trx
+          path: ${{ env.PROJECT_NAME }}.Test/TestResults/TestResults-${{ matrix.os.name }}.trx
 
   report:
     name: Report
-    runs-on: ${{ matrix.os.runner }}
+    runs-on: ubuntu-latest
     needs: test
     if: ${{ always() }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - { name: Windows, runner: windows-latest }
-          - { name: MacOS, runner: macos-latest }
-          - { name: Linux, runner: ubuntu-latest }
     steps:
-      - name: Download test artifact
+      - name: Download Linux test artifact
         uses: actions/download-artifact@v2
         with:
-          name: TestResults-${{ matrix.os.name }}
-          path: ${{ github.workspace }}
+          name: TestResults-Linux
+          path: ${{ github.workspace }}/TestResults
+
+      - name: Download Windows test artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: TestResults-Windows
+          path: ${{ github.workspace }}/TestResults
+
+      - name: Download MacOS test artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: TestResults-MacOS
+          path: ${{ github.workspace }}/TestResults
 
       - name: Report
         uses: dorny/test-reporter@v1.4.2
         with:
           artifact: TestResults-${{ matrix.os.name }}
           name: Test Results
-          path: "*.trx"
+          path: ${{ github.workspace }}/TestResults/*.trx
           reporter: dotnet-trx
