@@ -25,6 +25,24 @@ public class Piece
     /// </summary>
     public readonly int LineNumber;
     /// <summary>
+    /// Returns the step of a piece in a given state
+    /// </summary>
+    /// <returns>How many squares the piece can go through</returns>
+    public int Step
+    {
+        get
+        {
+            if (LineNumber == 3)
+                return 2;
+
+            bool isBlack = Player == Player.Black;
+            bool isForward = Direction == Direction.Forward;
+            bool isOnEdge = LineNumber == 1 || LineNumber == 5;
+            return isBlack ^ isForward ^ isOnEdge ? 3 : 1;
+        }
+    }
+
+    /// <summary>
     /// The board in which the piece plays
     /// </summary>
     public readonly Board Board;
@@ -55,21 +73,6 @@ public class Piece
     }
 
     /// <summary>
-    /// Returns the step of a piece in a given state
-    /// </summary>
-    /// <returns>How many squares the piece can go through</returns>
-    public int Step()
-    {
-        if (LineNumber == 3)
-            return 2;
-
-        bool isBlack = Player == Player.Black;
-        bool isForward = Direction == Direction.Forward;
-        bool isOnEdge = LineNumber == 1 || LineNumber == 5;
-        return isBlack ^ isForward ^ isOnEdge ? 3 : 1;
-    }
-
-    /// <summary>
     /// Move the position of the piece
     /// </summary>
     public void Move()
@@ -86,13 +89,12 @@ public class Piece
     /// <param name="board">The current board</param>
     private void moveForward()
     {
-        int step = Step();
-        int newPosition = Math.Min(Position + step, 6);
+        int newPosition = Math.Min(Position + Step, 6);
         bool isBlack = Player == Player.Black;
         Piece? piece;
 
         int i = Position;
-        while (i + 1 <= Math.Min(Position + step, 5))
+        while (i + 1 <= Math.Min(Position + Step, 5))
         {
             if (isBlack && Board.Grid[LineNumber, i + 1] != null)
             {
@@ -129,13 +131,12 @@ public class Piece
     /// <param name="board">The current Board</param>
     private void moveBackward()
     {
-        int step = Step();
-        int newPosition = Math.Max(Position - step, 0);
+        int newPosition = Math.Max(Position - Step, 0);
         bool isBlack = Player == Player.Black;
         Piece? piece;
 
         int i = Position;
-        while (i - 1 >= Math.Max(Position - step, 1))
+        while (i - 1 >= Math.Max(Position - Step, 1))
         {
             if (isBlack && Board.Grid[LineNumber, i - 1] != null)
             {
