@@ -17,7 +17,7 @@ public sealed class TestGame
     public static void BoardIsCorrectlyInitialized()
     {
         var board = new Board();
-        TestContext.WriteLine($"Initialized board\n{board}");
+        TestContext.Progress.WriteLine($"Initialized board\n{board}");
         piecesAreCorrectlyInitialized(board, Player.White);
         piecesAreCorrectlyInitialized(board, Player.Black);
     }
