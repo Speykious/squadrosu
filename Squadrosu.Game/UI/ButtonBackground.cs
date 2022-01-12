@@ -2,6 +2,7 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -31,17 +32,15 @@ public class ButtonBackground : CompositeDrawable
         set => background.Colour = value;
     }
 
+    public bool HasShadow { get; set; }
+
     public ButtonBackground(float cornerRadius = 5)
     {
         RelativeSizeAxes = Axes.Both;
         Masking = true;
         CornerRadius = cornerRadius;
-        EdgeEffect = new EdgeEffectParameters
-        {
-            Type = EdgeEffectType.Shadow,
-            Radius = default_shadow_radius,
-            Colour = Color4.Black.Opacity(default_shadow_opacity),
-        };
+        HasShadow = true;
+
         AddInternal(background = new Box
         {
             RelativeSizeAxes = Axes.Both,
@@ -58,14 +57,31 @@ public class ButtonBackground : CompositeDrawable
         });
     }
 
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        if (HasShadow)
+        {
+            EdgeEffect = new EdgeEffectParameters
+            {
+                Type = EdgeEffectType.Shadow,
+                Radius = default_shadow_radius,
+                Colour = Color4.Black.Opacity(default_shadow_opacity),
+            };
+        }
+    }
+
     protected override bool OnHover(HoverEvent e)
     {
-        TweenEdgeEffectTo(new EdgeEffectParameters
+        if (HasShadow)
         {
-            Type = EdgeEffectType.Shadow,
-            Radius = hover_shadow_radius,
-            Colour = Color4.Black.Opacity(hover_shadow_opacity),
-        }, duration, Easing.OutQuint);
+            TweenEdgeEffectTo(new EdgeEffectParameters
+            {
+                Type = EdgeEffectType.Shadow,
+                Radius = hover_shadow_radius,
+                Colour = Color4.Black.Opacity(hover_shadow_opacity),
+            }, duration, Easing.OutQuint);
+        }
         hover.FadeIn(200, Easing.OutQuint);
 
         return base.OnHover(e);
@@ -73,12 +89,15 @@ public class ButtonBackground : CompositeDrawable
 
     protected override void OnHoverLost(HoverLostEvent e)
     {
-        TweenEdgeEffectTo(new EdgeEffectParameters
+        if (HasShadow)
         {
-            Type = EdgeEffectType.Shadow,
-            Radius = default_shadow_radius,
-            Colour = Color4.Black.Opacity(default_shadow_opacity),
-        }, duration, Easing.OutQuint);
+            TweenEdgeEffectTo(new EdgeEffectParameters
+            {
+                Type = EdgeEffectType.Shadow,
+                Radius = default_shadow_radius,
+                Colour = Color4.Black.Opacity(default_shadow_opacity),
+            }, duration, Easing.OutQuint);
+        }
         hover.FadeOut(300);
 
         base.OnHoverLost(e);

@@ -34,6 +34,7 @@ public abstract class SquadrosuButton : Button
 
     public float TextShearX { get; set; }
     public float BackgroundCornerRadius { get; set; }
+    public bool HasShadow { get; set; }
     public event Action? OnClicked;
     public event Action? OnHovered;
 
@@ -61,6 +62,7 @@ public abstract class SquadrosuButton : Button
         TextShearX = 0f;
         TextSize = 50f;
         BackgroundCornerRadius = 0f;
+        HasShadow = true;
 
         Content = new Container
         {
@@ -82,6 +84,7 @@ public abstract class SquadrosuButton : Button
         Add(Background = new ButtonBackground(BackgroundCornerRadius)
         {
             Color = Color4Extensions.FromHex(@"323232"),
+            HasShadow = HasShadow,
         });
         Add(SpriteText = new SpriteText
         {

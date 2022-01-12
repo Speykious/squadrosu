@@ -16,6 +16,7 @@ public class BasicSquadrosuButton : SquadrosuButton
     public BasicSquadrosuButton() : base()
     {
         BackgroundCornerRadius = 10f;
+        HasShadow = false;
     }
 
     [BackgroundDependencyLoader]
