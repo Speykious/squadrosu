@@ -31,6 +31,7 @@ jobs:
         run: dotnet test ${{ env.PROJECT_NAME }}.Test --logger "trx;LogFileName=TestResults-${{ matrix.os.name }}.trx"
 
       - name: Upload test artifact
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: TestResults-${{ matrix.os.name }}
