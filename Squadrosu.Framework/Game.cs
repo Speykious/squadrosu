@@ -71,13 +71,12 @@ public sealed class Game
     /// Makes the current player move a given piece.
     /// </summary>
     /// <returns>Whether the piece has actually been moved.</returns>
-    public bool Move(int piece)
+    public bool Move(Piece piece)
     {
         if (State != GameState.Playing)
             return false;
 
-        if (!Board.Move(piece, CurrentPlayer))
-            return false;
+        piece.Move();
 
         GameActions.Add(new GameAction
         {

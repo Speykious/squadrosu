@@ -4,8 +4,9 @@
 
 namespace Squadrosu.Framework;
 
-public struct GameAction
+public enum Direction
 {
-    public Player Player;
-    public Piece Piece;
+    Forward,
+    Backward,
+    Finished
 }
