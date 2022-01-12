@@ -96,25 +96,31 @@ public class Piece
         int i = Position;
         while (i + 1 <= Math.Min(Position + Step, 5))
         {
-            if (isBlack && Board.Grid[LineNumber, i + 1] != null)
+            if (isBlack)
             {
-                while ((piece = Board.Grid[LineNumber, i + 1]) != null)
+                if (Board.Grid[LineNumber, i + 1] != null)
                 {
-                    piece.PlaceOnEdge();
-                    newPosition = i + 2;
-                    i++;
+                    while ((piece = Board.Grid[LineNumber, i + 1]) != null)
+                    {
+                        piece.PlaceOnEdge();
+                        newPosition = i + 2;
+                        i++;
+                    }
+                    i = 7;
                 }
-                i = 7;
             }
-            else if (Board.Grid[i + 1, LineNumber] != null)
+            else
             {
-                while ((piece = Board.Grid[i + 1, LineNumber]) != null)
+                if (Board.Grid[i + 1, LineNumber] != null)
                 {
-                    piece.PlaceOnEdge();
-                    newPosition = i + 2;
-                    i++;
+                    while ((piece = Board.Grid[i + 1, LineNumber]) != null)
+                    {
+                        piece.PlaceOnEdge();
+                        newPosition = i + 2;
+                        i++;
+                    }
+                    i = 7;
                 }
-                i = 7;
             }
             i++;
         }
@@ -138,25 +144,31 @@ public class Piece
         int i = Position;
         while (i - 1 >= Math.Max(Position - Step, 1))
         {
-            if (isBlack && Board.Grid[LineNumber, i - 1] != null)
+            if (isBlack)
             {
-                while ((piece = Board.Grid[LineNumber, i - 1]) != null)
+                if (isBlack && Board.Grid[LineNumber, i - 1] != null)
                 {
-                    piece.Reset();
-                    newPosition = i - 2;
-                    i--;
+                    while ((piece = Board.Grid[LineNumber, i - 1]) != null)
+                    {
+                        piece.Reset();
+                        newPosition = i - 2;
+                        i--;
+                    }
+                    i = -1;
                 }
-                i = -1;
             }
-            else if (Board.Grid[i - 1, LineNumber] != null)
+            else
             {
-                while ((piece = Board.Grid[i - 1, LineNumber]) != null)
+                if (Board.Grid[i - 1, LineNumber] != null)
                 {
-                    piece.Reset();
-                    newPosition = i - 2;
-                    i--;
+                    while ((piece = Board.Grid[i - 1, LineNumber]) != null)
+                    {
+                        piece.Reset();
+                        newPosition = i - 2;
+                        i--;
+                    }
+                    i = -1;
                 }
-                i = -1;
             }
             i--;
         }
