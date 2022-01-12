@@ -37,8 +37,10 @@ jobs:
           path: TestResults-${{ matrix.os.name }}.trx
 
   report:
+    name: Report
     runs-on: ${{ matrix.os.runner }}
     needs: test
+    if: ${{ always() }}
     strategy:
       fail-fast: false
       matrix:
