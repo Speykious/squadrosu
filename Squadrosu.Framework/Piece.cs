@@ -89,9 +89,9 @@ public class Piece
         int step = Step();
         int newPosition = Math.Min(Position + step, 6);
         bool isBlack = Player == Player.Black;
-        int i = Position;
         Piece? piece;
 
+        int i = Position;
         while (i + 1 <= Math.Min(Position + step, 5))
         {
             if (isBlack && Board.Positions[LineNumber, i + 1] != null)
@@ -132,9 +132,9 @@ public class Piece
         int step = Step();
         int newPosition = Math.Max(Position - step, 0);
         bool isBlack = Player == Player.Black;
-        int i = Position;
         Piece? piece;
 
+        int i = Position;
         while (i - 1 >= Math.Max(Position - step, 1))
         {
             if (isBlack && Board.Positions[LineNumber, i - 1] != null)
