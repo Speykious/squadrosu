@@ -2,6 +2,8 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using osu.Framework.Bindables;
+
 namespace Squadrosu.Game;
 
 /// <summary>
@@ -9,7 +11,7 @@ namespace Squadrosu.Game;
 /// </summary>
 public struct Settings
 {
-    public float Hue { get; set; }
-    public BackgroundConfig MenuBackground { get; set; }
-    public BackgroundConfig GameBackground { get; set; }
+    public Bindable<float> Hue { get; set; }
+    public Bindable<BackgroundConfig> MenuBackground { get; set; }
+    public Bindable<BackgroundConfig> GameBackground { get; set; }
 }

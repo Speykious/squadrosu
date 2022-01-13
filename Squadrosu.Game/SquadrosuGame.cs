@@ -8,13 +8,14 @@ using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osuTK.Input;
 using Squadrosu.Game.Screens;
+using Squadrosu.Game.UI.Settings;
 
 namespace Squadrosu.Game;
 
 public class SquadrosuGame : SquadrosuGameBase
 {
     private ScreenStack? screenStack;
-    private OptionOverlay? optionOverlay;
+    private SettingsOverlay? optionOverlay;
 
     private DependencyContainer? dependencies;
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
@@ -23,7 +24,7 @@ public class SquadrosuGame : SquadrosuGameBase
     [BackgroundDependencyLoader]
     private void load()
     {
-        optionOverlay = new OptionOverlay();
+        optionOverlay = new SettingsOverlay();
         dependencies?.Cache(optionOverlay);
 
         Children = new Drawable[]

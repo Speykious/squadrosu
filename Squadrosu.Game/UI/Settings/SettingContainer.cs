@@ -8,11 +8,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
-using osuTK;
 
-namespace Squadrosu.Game.UI;
+namespace Squadrosu.Game.UI.Settings;
 
-public class OptionSection : Container
+public class SettingContainer : Container
 {
     public LocalisableString Title
     {
@@ -24,7 +23,7 @@ public class OptionSection : Container
     private readonly Container<Drawable> contentContainer;
     protected override Container<Drawable> Content => contentContainer;
 
-    public OptionSection()
+    public SettingContainer()
     {
         RelativeSizeAxes = Axes.X;
         AutoSizeAxes = Axes.Y;

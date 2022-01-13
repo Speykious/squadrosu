@@ -5,6 +5,7 @@
 using osu.Framework.Graphics;
 using osuTK;
 using Squadrosu.Game.UI;
+using Squadrosu.Game.UI.Settings;
 using Squadrosu.Game.Sprites;
 using osu.Framework.Allocation;
 
@@ -16,7 +17,7 @@ public class MainMenuScreen : SquadrosuScreen
     private readonly MainMenuButton[] buttons;
 
     [Resolved]
-    private OptionOverlay? optionOverlay { get; set; }
+    private SettingsOverlay? optionOverlay { get; set; }
 
     public MainMenuScreen()
     {

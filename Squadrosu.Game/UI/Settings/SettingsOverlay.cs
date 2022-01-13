@@ -11,18 +11,17 @@ using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
-using Squadrosu.Game.UI;
 
-namespace Squadrosu.Game;
+namespace Squadrosu.Game.UI.Settings;
 
-public class OptionOverlay : VisibilityContainer
+public class SettingsOverlay : VisibilityContainer
 {
     private readonly Box backgroundDimmer;
     private readonly PopupContainer popupContainer;
     private readonly Container<Drawable> contentContainer;
     protected override Container<Drawable> Content => contentContainer;
 
-    public OptionOverlay()
+    public SettingsOverlay()
     {
         RelativePositionAxes = Axes.Both;
         RelativeSizeAxes = Axes.Both;
