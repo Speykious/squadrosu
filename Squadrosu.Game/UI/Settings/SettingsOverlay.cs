@@ -42,6 +42,7 @@ public class SettingsOverlay : VisibilityContainer
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both,
+                RelativePositionAxes = Axes.Both,
                 Size = new Vector2(.5f, 1f),
                 Children = new Drawable[]
                 {
@@ -50,6 +51,7 @@ public class SettingsOverlay : VisibilityContainer
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        RelativePositionAxes = Axes.Both,
                         Colour = Color4Extensions.FromHex(@"1b1b1bbb"),
                     },
                     new Container
@@ -57,17 +59,31 @@ public class SettingsOverlay : VisibilityContainer
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
+                        RelativePositionAxes = Axes.Both,
                         Children = new Drawable[]
                         {
                             // Content
-                            contentContainer = new FillFlowContainer
+                            new SquadrosuScrollContainer
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 RelativeSizeAxes = Axes.Both,
-                                Direction = FillDirection.Vertical,
-                                Spacing = new Vector2(20),
-                                Padding = new MarginPadding(20),
+                                RelativePositionAxes = Axes.Both,
+                                Padding = new MarginPadding
+                                {
+                                    Top = 100,
+                                    Bottom = 100,
+                                },
+                                Child = contentContainer = new FillFlowContainer
+                                {
+                                    Anchor = Anchor.Centre,
+                                    Origin = Anchor.Centre,
+                                    RelativeSizeAxes = Axes.Both,
+                                    RelativePositionAxes = Axes.Both,
+                                    Direction = FillDirection.Vertical,
+                                    Spacing = new Vector2(20),
+                                    Padding = new MarginPadding(20),
+                                },
                             },
                             // Header
                             new Container

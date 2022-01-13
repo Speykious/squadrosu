@@ -6,7 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
 using Squadrosu.Game.Screens;
-
+using Squadrosu.Game.UI.Settings;
 namespace Squadrosu.Game.Tests.Visual.Screens;
 
 public class TestSceneMainMenuScreen : SquadrosuTestScene

@@ -38,10 +38,10 @@ public class PopupContainer : VisibilityContainer
 
         AddInternal(contentContainer = new Container
         {
-            RelativeSizeAxes = Axes.Both,
-            RelativePositionAxes = Axes.Both,
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
+            RelativeSizeAxes = Axes.Both,
+            RelativePositionAxes = Axes.Both,
         });
     }
 
