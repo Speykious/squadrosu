@@ -33,6 +33,12 @@ public class SquadrosuGameBase : osu.Framework.Game
     private void load()
     {
         Resources.AddStore(new DllResourceStore(typeof(SquadrosuResources).Assembly));
+
+        AddFont(Resources, @"Fonts/Abel/Abel");
+        AddFont(Resources, @"Fonts/Abel/Abel-Bold");
+        AddFont(Resources, @"Fonts/Abel/Abel-Italic");
+        AddFont(Resources, @"Fonts/Abel/Abel-BoldItalic");
+
         Audio.Samples.PlaybackConcurrency = 6;
     }
 }
