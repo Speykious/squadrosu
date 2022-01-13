@@ -30,12 +30,12 @@ public sealed class Game
     /// <summary>
     /// A record of all the player moves so far.
     /// </summary>
-    public readonly List<GameAction> GameActions;
+    public readonly List<GameAction> History;
 
     public Game(Player firstPlayer)
     {
         Board = new Board();
-        GameActions = new List<GameAction>();
+        History = new List<GameAction>();
         Reset(firstPlayer);
     }
 
@@ -78,10 +78,10 @@ public sealed class Game
 
         piece.Move();
 
-        GameActions.Add(new GameAction
+        History.Add(new GameAction
         {
             Player = CurrentPlayer,
-            Piece = piece,
+            LineNumber = piece.LineNumber,
         });
 
         updateState();
@@ -102,6 +102,6 @@ public sealed class Game
         CurrentTurn = 0;
         CurrentPlayer = firstPlayer;
         State = GameState.Playing;
-        GameActions.Clear();
+        History.Clear();
     }
 }

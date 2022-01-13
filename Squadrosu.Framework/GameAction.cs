@@ -7,5 +7,5 @@ namespace Squadrosu.Framework;
 public struct GameAction
 {
     public Player Player;
-    public Piece Piece;
+    public int LineNumber;
 }
