@@ -67,7 +67,7 @@ public class TestSceneShearText : SquadrosuTestScene
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Text = "This text shouldn't appear sheared <.<",
-                            Font = SquadrosuFont.GetFont(size: 42),
+                            Font = SquadrosuFont.Default.With(size: 42),
                             Padding = new MarginPadding(20),
                         },
                     },

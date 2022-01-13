@@ -31,6 +31,9 @@ public class MainMenuButton : SquadrosuButton
     {
         SampleHover = new DrawableSample(audio.Samples.Get(@"button-hover"));
         SampleClick = new DrawableSample(audio.Samples.Get(@"button-select"));
+
+        if (SpriteText != null)
+            SpriteText.Font = SpriteText.Font.With(weight: FontWeight.Bold);
     }
 
     /// <summary>

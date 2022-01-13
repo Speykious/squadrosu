@@ -49,7 +49,7 @@ public class TestScenePopupContainer : SquadrosuTestScene
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Font = SquadrosuFont.GetFont(size: 20),
+                            Font = SquadrosuFont.Default.With(size: 20),
                             Text = @"Popup Container",
                         },
                     },
