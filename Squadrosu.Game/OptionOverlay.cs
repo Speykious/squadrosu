@@ -61,11 +61,13 @@ public class OptionOverlay : VisibilityContainer
                         Children = new Drawable[]
                         {
                             // Content
-                            contentContainer = new Container
+                            contentContainer = new FillFlowContainer
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 RelativeSizeAxes = Axes.Both,
+                                Direction = FillDirection.Vertical,
+                                Spacing = new Vector2(20),
                                 Padding = new MarginPadding(20),
                             },
                             // Header
