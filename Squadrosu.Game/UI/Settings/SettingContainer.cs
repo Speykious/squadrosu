@@ -33,7 +33,7 @@ public class SettingContainer : Container
             new CompositeBackground(20)
             {
                 RelativeSizeAxes = Axes.Both,
-                Color = Color4Extensions.FromHex(@"323232"),
+                Color = SquadrosuColor.ButtonGray,
             },
             new FillFlowContainer
             {
@@ -53,6 +53,7 @@ public class SettingContainer : Container
                         Width = .3f,
                         Padding = new MarginPadding(20)
                         {
+                            Left = 40,
                             Right = 10,
                         },
                         Child = spriteTitle = new SpriteText
@@ -72,6 +73,7 @@ public class SettingContainer : Container
                         Padding = new MarginPadding(20)
                         {
                             Left = 10,
+                            Right = 40,
                         },
                     }
                 },

@@ -83,7 +83,6 @@ public abstract class SquadrosuButton : Button
 
         Add(Background = new ButtonBackground(BackgroundCornerRadius)
         {
-            Color = Color4Extensions.FromHex(@"323232"),
             HasShadow = HasShadow,
         });
         Add(SpriteText = new SpriteText

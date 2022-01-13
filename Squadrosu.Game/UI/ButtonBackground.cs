@@ -33,6 +33,8 @@ public class ButtonBackground : CompositeBackground
             Blending = BlendingParameters.Additive,
             Depth = float.MinValue
         });
+
+        Color = SquadrosuColor.ButtonGray;
     }
 
     protected override bool OnHover(HoverEvent e)
