@@ -5,7 +5,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
-using osu.Framework.IO.Stores;
 using osu.Framework.Screens;
 using osuTK.Input;
 using Squadrosu.Game.Screens;
