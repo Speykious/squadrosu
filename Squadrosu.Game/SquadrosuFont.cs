@@ -12,4 +12,18 @@ public static class SquadrosuFont
 
     public static FontUsage GetFont(float size = 14f) =>
         new FontUsage("Abel", size: size);
+
+
+}
+
+public static class SquadrosuFontExtensions
+{
+    public static FontUsage With(this FontUsage usage, FontWeight? weight = null, float? size = null, bool? italics = null, bool? fixedWidth = null)
+        => usage.With("Abel", size, weight?.ToString(), italics, fixedWidth);
+}
+
+public enum FontWeight
+{
+    Regular,
+    Bold,
 }
