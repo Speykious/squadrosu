@@ -9,9 +9,23 @@ namespace Squadrosu.Game;
 /// <summary>
 /// Struct containing all the settings that can be saved between 2 instances of the Squadrosu game.
 /// </summary>
-public struct Settings
+public class Settings
 {
-    public Bindable<float> Hue { get; set; }
+    public Bindable<int> Hue { get; set; }
     public Bindable<BackgroundConfig> MenuBackground { get; set; }
     public Bindable<BackgroundConfig> GameBackground { get; set; }
+
+    public Settings()
+    {
+        Hue = new BindableInt
+        {
+            Value = 0,
+            Default = 0,
+            MinValue = 0,
+            MaxValue = 360,
+        };
+
+        MenuBackground = new Bindable<BackgroundConfig>();
+        GameBackground = new Bindable<BackgroundConfig>();
+    }
 }
