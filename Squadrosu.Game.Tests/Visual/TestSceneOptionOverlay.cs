@@ -39,6 +39,20 @@ public class TestSceneOptionOverlay : SquadrosuTestScene
                             Font = SquadrosuFont.Default.With(size: 50),
                             Text = @"OwOptions",
                         },
+                        new OptionSection
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            // RelativeSizeAxes = Axes.X,
+                            // Height = 200f,
+                            Child = new SpriteText
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Font = SquadrosuFont.Default.With(size: 50),
+                                Text = @"Contained OwOptions",
+                            },
+                        },
                     },
                 }
             },
