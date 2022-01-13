@@ -92,7 +92,7 @@ public abstract class SquadrosuButton : Button
             Origin = Anchor.Centre,
             Shear = new Vector2(TextShearX, 0),
             Padding = new MarginPadding(20),
-            Font = FontUsage.Default.With(size: TextSize),
+            Font = SquadrosuFont.GetFont(size: TextSize),
             Text = Text,
         });
 

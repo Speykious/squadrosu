@@ -36,7 +36,7 @@ public class TestSceneOptionOverlay : SquadrosuTestScene
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Font = FontUsage.Default.With(size: 50),
+                            Font = SquadrosuFont.GetFont(size: 50),
                             Text = @"OwOptions",
                         },
                     },
