@@ -16,6 +16,7 @@ public class SquadrosuGame : SquadrosuGameBase
 {
     private ScreenStack? screenStack;
     private SettingsOverlay? settingsOverlay;
+    private Settings? settings;
 
     private DependencyContainer? dependencies;
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
@@ -26,6 +27,9 @@ public class SquadrosuGame : SquadrosuGameBase
     {
         settingsOverlay = new SquadrosuSettingsOverlay();
         dependencies?.Cache(settingsOverlay);
+
+        settings = new Settings();
+        dependencies?.Cache(settings);
 
         Children = new Drawable[]
         {
