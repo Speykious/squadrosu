@@ -78,25 +78,24 @@ public sealed class TestGame
     }
 
     [Test]
-    public static void RulesCorrectlyImplemented()
+    public static void PassedPiecesGetReset()
     {
         Board board = new Board();
         board.Whites[0].Move();
         board.Whites[2].Move();
         board.Whites[3].Move();
-        TestContext.Progress.WriteLine($"Black steps\n{board}");
+        TestContext.Progress.WriteLine($"White steps\n{board}");
+
         multipleMove(board.Blacks[0], 1);
         multipleMove(board.Blacks[2], 2);
         multipleMove(board.Blacks[1], 3);
         TestContext.Progress.WriteLine($"Black steps\n{board}");
+
         for (int i = 0; i < 5; i++)
-        {
             Assert.AreEqual(board.Whites[i].Position, 0);
-        }
         Assert.AreEqual(board.Blacks[0].Position, 2);
         Assert.AreEqual(board.Blacks[1].Position, 4);
         Assert.AreEqual(board.Blacks[2].Position, 5);
-
     }
 
     [Test]
@@ -119,12 +118,23 @@ public sealed class TestGame
     public static void CanAPlayerWin()
     {
         Game game = new Game(Player.Black);
+        Assert.AreEqual(game.State, GameState.Playing);
+
         multipleMove(game, game.Board.Blacks[4], 3);
         multipleMove(game, game.Board.Blacks[0], 10);
         multipleMove(game, game.Board.Blacks[1], 10);
         multipleMove(game, game.Board.Blacks[2], 10);
         multipleMove(game, game.Board.Blacks[3], 10);
-        Assert.AreEqual(game.State, GameState.BlackWon);
         TestContext.Progress.WriteLine($"Black steps\n{game.Board}");
+        Assert.AreEqual(game.State, GameState.BlackWon);
+
+        game.Reset(Player.White);
+        multipleMove(game, game.Board.Whites[4], 3);
+        multipleMove(game, game.Board.Whites[0], 10);
+        multipleMove(game, game.Board.Whites[1], 10);
+        multipleMove(game, game.Board.Whites[2], 10);
+        multipleMove(game, game.Board.Whites[3], 10);
+        TestContext.Progress.WriteLine($"White steps\n{game.Board}");
+        Assert.AreEqual(game.State, GameState.WhiteWon);
     }
 }
