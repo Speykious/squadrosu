@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
+using osuTK;
 
 namespace Squadrosu.Game.UI.Settings;
 
@@ -20,8 +21,10 @@ public class SettingContainer : Container
     }
 
     private readonly SpriteText spriteTitle;
-    private readonly Container<Drawable> contentContainer;
+    private readonly Container contentContainer;
     protected override Container<Drawable> Content => contentContainer;
+
+    protected readonly Container<Drawable> TitleContainer;
 
     public SettingContainer()
     {
@@ -45,12 +48,15 @@ public class SettingContainer : Container
                 Margin = new MarginPadding(20),
                 Children = new Drawable[]
                 {
-                    new Container
+                    TitleContainer = new FillFlowContainer
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Vertical,
                         Width = .3f,
+                        Spacing = new Vector2(20),
                         Padding = new MarginPadding(20)
                         {
                             Left = 40,

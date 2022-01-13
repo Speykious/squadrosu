@@ -30,6 +30,11 @@ public class SquadrosuSettingsOverlay : SettingsOverlay
                     Text = @"Contained OwOptions",
                 },
             },
+            new BackgroundSettingContainer
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+            },
         };
     }
 }
