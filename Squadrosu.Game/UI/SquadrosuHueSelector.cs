@@ -65,9 +65,14 @@ public class SquadrosuHueSelector : HSVColourPicker.HueSelector
             };
         }
 
+        private void hueChangedEventHandler(ValueChangedEvent<float> hue)
+        {
+            Colour = Colour4.FromHSV(hue.NewValue, 1, 1);
+        }
+
         protected override void LoadComplete()
         {
-            hue.BindValueChanged(h => Colour = Colour4.FromHSV(h.NewValue, 1, 1), true);
+            hue.BindValueChanged(hueChangedEventHandler, true);
         }
     }
 }
