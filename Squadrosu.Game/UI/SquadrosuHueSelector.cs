@@ -12,39 +12,58 @@ using osu.Framework.Graphics.UserInterface;
 
 namespace Squadrosu.Game.UI;
 
-public class SquadrosuHueSelector : HSVColourPicker.HueSelector
+/// <summary>
+/// A slider bar where its value can be adjusted by dragging the nub.
+/// </summary>
+public class SquadrosuHueSelector : SliderBar<int>
 {
-    private const float corner_radius = 6;
+    private Drawable? nub;
+    public Bindable<int> Hue => Current;
 
-    public SquadrosuHueSelector()
+    public SquadrosuHueSelector() : base()
     {
-        SliderBar.CornerRadius = corner_radius;
-        SliderBar.Masking = true;
+        Current = new BindableInt
+        {
+            Value = 0,
+            Default = 0,
+            MinValue = 0,
+            MaxValue = 360,
+        };
+
+        RelativeSizeAxes = Axes.X;
+        Height = 42;
+
+        AddInternal(new Container
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Masking = true,
+            CornerRadius = 10f,
+            RelativeSizeAxes = Axes.Both,
+            Child = new HueSelectorBackground
+            {
+                RelativeSizeAxes = Axes.Both
+            },
+        });
     }
 
-    protected override Drawable CreateSliderNub() => new SliderNub(this);
-
-    private class SliderNub : CompositeDrawable
+    [BackgroundDependencyLoader]
+    private void load(TextureStore textures)
     {
-        private readonly Bindable<float> hue;
+        var pointerTexture = textures.Get(@"hue_pointer_half");
+        pointerTexture.ScaleAdjust = 1f;
 
-        public SliderNub(SquadrosuHueSelector selector)
+        AddInternal(new Container
         {
-            hue = selector.Hue.GetBoundCopy();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(TextureStore textures)
-        {
-            var pointerTexture = textures.Get(@"hue_pointer_half");
-            pointerTexture.ScaleAdjust = 1f;
-
-            InternalChild = new Container
+            Origin = Anchor.CentreLeft,
+            Anchor = Anchor.CentreLeft,
+            RelativeSizeAxes = Axes.Both,
+            Child = nub = new Container
             {
                 Padding = new MarginPadding(-10),
                 RelativeSizeAxes = Axes.Y,
                 Origin = Anchor.Centre,
-                Anchor = Anchor.Centre,
+                Anchor = Anchor.CentreLeft,
                 Children = new Drawable[]
                 {
                     new Sprite
@@ -62,17 +81,17 @@ public class SquadrosuHueSelector : HSVColourPicker.HueSelector
                         Rotation = 180,
                     },
                 },
-            };
-        }
+            },
+        });
+    }
 
-        private void hueChangedEventHandler(ValueChangedEvent<float> hue)
-        {
-            Colour = Colour4.FromHSV(hue.NewValue, 1, 1);
-        }
-
-        protected override void LoadComplete()
-        {
-            hue.BindValueChanged(hueChangedEventHandler, true);
-        }
+    private bool hasInitialWidth;
+    protected override void UpdateValue(float value)
+    {
+        double duration = hasInitialWidth ? 200 : 0;
+        Easing easing = Easing.OutQuint;
+        nub?.MoveToX(value * DrawWidth, duration, easing);
+        nub?.FadeColour(Colour4.FromHSV(value, 1, 1), duration, easing);
+        hasInitialWidth = true;
     }
 }

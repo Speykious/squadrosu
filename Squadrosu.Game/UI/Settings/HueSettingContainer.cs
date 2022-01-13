@@ -11,7 +11,7 @@ namespace Squadrosu.Game.UI.Settings;
 
 public class HueSettingContainer : SettingContainer
 {
-    public readonly Bindable<float> Hue;
+    public readonly Bindable<int> Hue;
     private readonly SquadrosuHueSelector selector;
     public HueSettingContainer() : base()
     {
