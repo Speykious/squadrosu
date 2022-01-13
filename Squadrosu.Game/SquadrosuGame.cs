@@ -15,7 +15,7 @@ namespace Squadrosu.Game;
 public class SquadrosuGame : SquadrosuGameBase
 {
     private ScreenStack? screenStack;
-    private SettingsOverlay? optionOverlay;
+    private SettingsOverlay? settingsOverlay;
 
     private DependencyContainer? dependencies;
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
@@ -24,8 +24,8 @@ public class SquadrosuGame : SquadrosuGameBase
     [BackgroundDependencyLoader]
     private void load()
     {
-        optionOverlay = new SettingsOverlay();
-        dependencies?.Cache(optionOverlay);
+        settingsOverlay = new SquadrosuSettingsOverlay();
+        dependencies?.Cache(settingsOverlay);
 
         Children = new Drawable[]
         {
@@ -33,7 +33,7 @@ public class SquadrosuGame : SquadrosuGameBase
             {
                 RelativeSizeAxes = Axes.Both,
             },
-            optionOverlay,
+            settingsOverlay,
         };
     }
 
@@ -41,7 +41,7 @@ public class SquadrosuGame : SquadrosuGameBase
     {
         if (!e.Repeat && e.Key == Key.O)
         {
-            optionOverlay?.Show();
+            settingsOverlay?.Show();
             return true;
         }
 

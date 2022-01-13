@@ -11,10 +11,7 @@ namespace Squadrosu.Game.Tests.Visual.Screens;
 
 public class TestSceneMainMenuScreen : SquadrosuTestScene
 {
-    // Add visual tests to ensure correct behaviour of your game: https://github.com/ppy/osu-framework/wiki/Development-and-Testing
-    // You can make changes to classes associated with the tests and they will recompile and update immediately.
-
-    private SettingsOverlay? optionOverlay;
+    private SquadrosuSettingsOverlay? settingsOverlay;
 
     private DependencyContainer? dependencies;
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
@@ -23,13 +20,13 @@ public class TestSceneMainMenuScreen : SquadrosuTestScene
     [BackgroundDependencyLoader]
     private void load()
     {
-        optionOverlay = new SettingsOverlay();
-        dependencies?.Cache(optionOverlay);
+        settingsOverlay = new SquadrosuSettingsOverlay();
+        dependencies?.Cache(settingsOverlay);
 
         Add(new ScreenStack(new MainMenuScreen())
         {
             RelativeSizeAxes = Axes.Both
         });
-        Add(optionOverlay);
+        Add(settingsOverlay);
     }
 }
