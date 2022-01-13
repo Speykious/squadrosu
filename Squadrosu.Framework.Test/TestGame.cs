@@ -18,6 +18,11 @@ public sealed class TestGame
         for (int i = 0; i < nb; i++)
             piece.Move();
     }
+    private static void multipleMove(Game game, Piece piece, int nb)
+    {
+        for (int i = 0; i < nb; i++)
+            game.Move(piece);
+    }
 
     [Test]
     public static void BoardIsCorrectlyInitialized()
@@ -108,5 +113,18 @@ public sealed class TestGame
         multipleMove(board.Whites[2], 3);
         Assert.AreEqual(board.Blacks[0].Direction, Direction.Finished);
         Assert.AreEqual(board.Whites[2].Direction, Direction.Finished);
+    }
+
+    [Test]
+    public static void CanAPlayerWin()
+    {
+        Game game = new Game(Player.Black);
+        multipleMove(game, game.Board.Blacks[4], 3);
+        multipleMove(game, game.Board.Blacks[0], 10);
+        multipleMove(game, game.Board.Blacks[1], 10);
+        multipleMove(game, game.Board.Blacks[2], 10);
+        multipleMove(game, game.Board.Blacks[3], 10);
+        Assert.AreEqual(game.State, GameState.BlackWon);
+        TestContext.Progress.WriteLine($"Black steps\n{game.Board}");
     }
 }
