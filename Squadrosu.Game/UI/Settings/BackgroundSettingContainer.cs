@@ -12,8 +12,6 @@ namespace Squadrosu.Game.UI.Settings;
 
 public class BackgroundSettingContainer : SettingContainer
 {
-    public readonly Bindable<int> Hue;
-    private readonly SquadrosuHueSelector selector;
     public BackgroundSettingContainer() : base()
     {
         Title = "Arrière-plan";
@@ -26,10 +24,21 @@ public class BackgroundSettingContainer : SettingContainer
             Spacing = new Vector2(10),
             Children = new Drawable[]
             {
-                selector = new SquadrosuHueSelector
+                new PercentageSettingSlider
                 {
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Label = "Obscurité",
+                },
+                new PercentageSettingSlider
+                {
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Label = "Flou",
                 },
             },
         };
@@ -46,15 +55,7 @@ public class BackgroundSettingContainer : SettingContainer
             {
                 Origin = Anchor.Centre,
                 Anchor = Anchor.Centre,
-            }
+            },
         });
-
-        Hue = selector.Hue.GetBoundCopy();
-    }
-
-    [BackgroundDependencyLoader]
-    private void load()
-    {
-
     }
 }
