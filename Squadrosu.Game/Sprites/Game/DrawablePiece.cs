@@ -99,7 +99,7 @@ public class DrawablePiece : CompositeDrawable
         }, 200, Easing.OutQuint);
     }
 
-    private void glow(float radius, float opacity)
+    public void Glow(float radius, float opacity, double duration = 200)
     {
         slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
         {
@@ -107,20 +107,31 @@ public class DrawablePiece : CompositeDrawable
             Radius = radius,
             Roundness = EdgeEffect.Roundness,
             Colour = SquadrosuColor.Hue(hue.Value).Opacity(opacity),
-        }, 200, Easing.OutQuint);
+        }, duration, Easing.OutQuint);
     }
-    private void flash(float radius)
+    public void Flash(float radius = 10f, int repetitions = 1, double delay = 200)
     {
-        slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+        if (slotContainer == null)
+            return;
+
+        for (int i = 0; i < repetitions; i++)
         {
-            Type = EdgeEffectType.Glow,
-            Radius = radius,
-            Roundness = EdgeEffect.Roundness,
-            Colour = Color4.White.Opacity(1f),
-        });
+            Scheduler.AddDelayed(() =>
+            {
+                slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+                {
+                    Type = EdgeEffectType.Glow,
+                    Radius = radius,
+                    Roundness = EdgeEffect.Roundness,
+                    Colour = Color4.White.Opacity(1f),
+                });
+                GlowOut(delay * 1.5);
+            }, delay * i);
+        }
     }
-    private void glowIn() => glow(20f, .5f);
-    private void glowOut() => glow(2f, 0f);
+
+    public void GlowIn(double duration = 200) => Glow(20f, .5f, duration);
+    public void GlowOut(double duration = 200) => Glow(2f, 0f, duration);
 
     protected override bool OnHover(HoverEvent e)
     {
@@ -133,7 +144,7 @@ public class DrawablePiece : CompositeDrawable
                 SampleHover.Play();
             }
 
-            glowIn();
+            GlowIn();
             return true;
         }
 
@@ -144,7 +155,7 @@ public class DrawablePiece : CompositeDrawable
     {
         if (Enabled)
         {
-            glowOut();
+            GlowOut();
             return;
         }
 
@@ -162,8 +173,7 @@ public class DrawablePiece : CompositeDrawable
                 SampleClick.Play();
             }
 
-            flash(10f);
-            Schedule(glowOut);
+            Flash();
 
             OnClicked?.Invoke(this, new PieceClickedEventArgs(Piece));
 

@@ -78,6 +78,16 @@ public class DrawableBoard : CompositeDrawable
         UpdateFromBoard();
     }
 
+    public void DisplayWin(Player player)
+    {
+        EnableWhiteInput.Value = false;
+        EnableBlackInput.Value = false;
+
+        DrawablePiece[] pieceDrawables = player == Player.White ? whiteDrawables : blackDrawables;
+        foreach (DrawablePiece piece in pieceDrawables)
+            piece.Flash(repetitions: 4, delay: 400);
+    }
+
     public void UpdateFromBoard()
     {
         for (int i = 0; i < 5; i++)

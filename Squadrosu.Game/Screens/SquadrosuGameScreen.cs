@@ -57,11 +57,19 @@ public class SquadrosuGameScreen : SquadrosuScreen
     {
         game.Move(e.Piece);
 
-        if (game.Board.PlayerWon() == null)
+        switch (game.State)
         {
-            bool isWhite = game.CurrentPlayer == Player.White;
-            drawableBoard.EnableWhiteInput.Value = isWhite;
-            drawableBoard.EnableBlackInput.Value = !isWhite;
+            case GameState.Playing:
+                bool isWhite = game.CurrentPlayer == Player.White;
+                drawableBoard.EnableWhiteInput.Value = isWhite;
+                drawableBoard.EnableBlackInput.Value = !isWhite;
+                break;
+            case GameState.WhiteWon:
+                drawableBoard.DisplayWin(Player.White);
+                break;
+            case GameState.BlackWon:
+                drawableBoard.DisplayWin(Player.Black);
+                break;
         }
     }
 
