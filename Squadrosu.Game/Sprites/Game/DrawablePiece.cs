@@ -99,6 +99,29 @@ public class DrawablePiece : CompositeDrawable
         }, 200, Easing.OutQuint);
     }
 
+    private void glow(float radius, float opacity)
+    {
+        slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+        {
+            Type = EdgeEffectType.Glow,
+            Radius = radius,
+            Roundness = EdgeEffect.Roundness,
+            Colour = SquadrosuColor.Hue(hue.Value).Opacity(opacity),
+        }, 200, Easing.OutQuint);
+    }
+    private void flash(float radius)
+    {
+        slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+        {
+            Type = EdgeEffectType.Glow,
+            Radius = radius,
+            Roundness = EdgeEffect.Roundness,
+            Colour = Color4.White.Opacity(1f),
+        });
+    }
+    private void glowIn() => glow(20f, .5f);
+    private void glowOut() => glow(2f, 0f);
+
     protected override bool OnHover(HoverEvent e)
     {
         if (Enabled)
@@ -110,14 +133,7 @@ public class DrawablePiece : CompositeDrawable
                 SampleHover.Play();
             }
 
-            slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-            {
-                Type = EdgeEffectType.Glow,
-                Radius = 20,
-                Roundness = EdgeEffect.Roundness,
-                Colour = SquadrosuColor.Hue(hue.Value).Opacity(.5f),
-            }, 200, Easing.OutQuint);
-
+            glowIn();
             return true;
         }
 
@@ -128,14 +144,7 @@ public class DrawablePiece : CompositeDrawable
     {
         if (Enabled)
         {
-            slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-            {
-                Type = EdgeEffectType.Glow,
-                Radius = 2,
-                Roundness = EdgeEffect.Roundness,
-                Colour = SquadrosuColor.Hue(hue.Value).Opacity(0f),
-            }, 200, Easing.OutQuint);
-
+            glowOut();
             return;
         }
 
@@ -153,23 +162,8 @@ public class DrawablePiece : CompositeDrawable
                 SampleClick.Play();
             }
 
-            slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-            {
-                Type = EdgeEffectType.Glow,
-                Radius = 10,
-                Roundness = EdgeEffect.Roundness,
-                Colour = Color4.White.Opacity(1f),
-            });
-            Schedule(() =>
-            {
-                slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-                {
-                    Type = EdgeEffectType.Glow,
-                    Radius = 20,
-                    Roundness = EdgeEffect.Roundness,
-                    Colour = SquadrosuColor.Hue(hue.Value).Opacity(.5f),
-                }, 300, Easing.OutQuint);
-            });
+            flash(10f);
+            Schedule(glowOut);
 
             OnClicked?.Invoke(this, new PieceClickedEventArgs(Piece));
 
