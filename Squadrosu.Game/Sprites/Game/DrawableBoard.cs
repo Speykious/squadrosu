@@ -211,12 +211,17 @@ public class DrawableBoard : CompositeDrawable
         EnableWhiteInput.BindValueChanged((e) =>
         {
             foreach (DrawablePiece white in whiteDrawables)
-                white.Enabled = e.NewValue;
+                setPieceEnabled(white, e.NewValue);
         }, true);
         EnableBlackInput.BindValueChanged((e) =>
         {
             foreach (DrawablePiece black in blackDrawables)
-                black.Enabled = e.NewValue;
+                setPieceEnabled(black, e.NewValue);
         }, true);
+    }
+
+    private void setPieceEnabled(DrawablePiece piece, bool enabled)
+    {
+        piece.Enabled = !(piece.Piece.Direction == Framework.Direction.Finished) && enabled;
     }
 }
