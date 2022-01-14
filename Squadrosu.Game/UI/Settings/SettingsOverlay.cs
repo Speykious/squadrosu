@@ -139,13 +139,6 @@ public class SettingsOverlay : VisibilityContainer
                                                 Size = new Vector2(200, 70),
                                                 Text = "Ok",
                                             },
-                                            new SpriteText
-                                            {
-                                                Anchor = Anchor.CentreRight,
-                                                Origin = Anchor.CentreRight,
-                                                Text = @"This is a Footer",
-                                                Font = SquadrosuFont.Default.With(size: 50),
-                                            },
                                         },
                                     },
                                 },
