@@ -32,7 +32,7 @@ public class DrawablePiece : CompositeDrawable
         get => enabled;
         set
         {
-            this.FadeColour(Color4.White.Opacity(value ? 1f : .5f), 200, Easing.OutQuint);
+            this.FadeColour(SquadrosuColor.Gray(value ? 1f : .6f), 200, Easing.OutQuint);
             enabled = value;
         }
     }
@@ -170,6 +170,8 @@ public class DrawablePiece : CompositeDrawable
                     Colour = SquadrosuColor.Hue(hue.Value).Opacity(.5f),
                 }, 300, Easing.OutQuint);
             });
+
+            OnClicked?.Invoke();
 
             return true;
         }
