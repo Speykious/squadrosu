@@ -5,6 +5,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Screens;
 using osuTK;
 using Squadrosu.Game.UI;
 
@@ -39,16 +40,10 @@ public class SquadrosuGameScreen : SquadrosuScreen
         background.DimTo(config.Dim, 200, Easing.OutQuint);
     }
 
-    protected override void LoadComplete()
-    {
-        base.LoadComplete();
-
-        this.FadeInFromZero(700, Easing.OutQuad);
-    }
-
     protected override void OnExit()
     {
         // TODO: add confirmation overlay
-        Game.Exit();
+
+        base.OnExit();
     }
 }
