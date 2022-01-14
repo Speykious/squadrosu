@@ -208,15 +208,15 @@ public class DrawableBoard : CompositeDrawable
         pieceContainer.AddRange(whiteDrawables);
         pieceContainer.AddRange(blackDrawables);
 
-        EnableWhiteInput.ValueChanged += (e) =>
+        EnableWhiteInput.BindValueChanged((e) =>
         {
             foreach (DrawablePiece white in whiteDrawables)
                 white.Enabled = e.NewValue;
-        };
-        EnableBlackInput.ValueChanged += (e) =>
+        }, true);
+        EnableBlackInput.BindValueChanged((e) =>
         {
             foreach (DrawablePiece black in blackDrawables)
                 black.Enabled = e.NewValue;
-        };
+        }, true);
     }
 }
