@@ -22,9 +22,13 @@ public class MainMenuScreen : SquadrosuScreen
     [Resolved]
     private SquadrosuSettingsOverlay? settingsOverlay { get; set; }
 
+    [Resolved]
+    private RulesOverlay? rulesOverlay { get; set; }
+
     public MainMenuScreen()
     {
         MainMenuButton PlayButton;
+        MainMenuButton RulesButton;
         MainMenuButton OptionsButton;
         MainMenuButton QuitButton;
         InternalChildren = new Drawable[]
@@ -51,13 +55,14 @@ public class MainMenuScreen : SquadrosuScreen
                 Children = buttons = new MainMenuButton[]
                 {
                     PlayButton = new MainMenuButton { Text = "Jouer" },
-                    new MainMenuButton { Text = "Règles" },
+                    RulesButton = new MainMenuButton { Text = "Règles" },
                     OptionsButton = new MainMenuButton { Text = "Options" },
                     QuitButton = new MainMenuButton { Text = "Quitter" },
                 },
             },
         };
         QuitButton.OnClicked += OnExit;
+        RulesButton.OnClicked += () => rulesOverlay?.Show();
         OptionsButton.OnClicked += () => settingsOverlay?.Show();
         PlayButton.OnClicked += goToGameScreen;
     }

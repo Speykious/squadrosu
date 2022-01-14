@@ -15,6 +15,7 @@ namespace Squadrosu.Game;
 public class SquadrosuGame : SquadrosuGameBase
 {
     private ScreenStack? screenStack;
+    private RulesOverlay? rulesOverlay;
     private SettingsOverlay? settingsOverlay;
     private Settings? settings;
 
@@ -28,6 +29,9 @@ public class SquadrosuGame : SquadrosuGameBase
         settings = new Settings();
         dependencies?.Cache(settings);
 
+        rulesOverlay = new RulesOverlay();
+        dependencies?.Cache(rulesOverlay);
+
         settingsOverlay = new SquadrosuSettingsOverlay();
         dependencies?.Cache(settingsOverlay);
 
@@ -37,6 +41,7 @@ public class SquadrosuGame : SquadrosuGameBase
             {
                 RelativeSizeAxes = Axes.Both,
             },
+            rulesOverlay,
             settingsOverlay,
         };
     }
