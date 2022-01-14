@@ -2,14 +2,14 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
-using osu.Framework.Graphics;
-using osuTK;
-using Squadrosu.Game.UI;
-using Squadrosu.Game.UI.Settings;
-using Squadrosu.Game.Sprites;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Screens;
+using osuTK;
+using Squadrosu.Game.Sprites;
+using Squadrosu.Game.UI;
+using Squadrosu.Game.UI.Settings;
 
 namespace Squadrosu.Game.Screens;
 
@@ -64,14 +64,7 @@ public class MainMenuScreen : SquadrosuScreen
 
     private void goToGameScreen()
     {
-        LoadComponentAsync(new SquadrosuGameScreen(), screen =>
-        {
-            logo.Delay(2000).FadeOutFromOne(500, Easing.InOutQuad);
-            Scheduler.AddDelayed(() =>
-            {
-                this.Push(screen);
-            }, 3000);
-        });
+        LoadComponentAsync(new SquadrosuGameScreen(), screen => this.Push(screen));
     }
 
     [BackgroundDependencyLoader]
