@@ -2,6 +2,7 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -33,12 +34,27 @@ public class BackgroundSettingContainer : SettingContainer
             },
         };
 
-        TitleContainer.Add(new SquadrosuHueSelector
+        TitleContainer.Add(new Container
         {
             Origin = Anchor.Centre,
             Anchor = Anchor.Centre,
+            Width = 160,
+            Height = 90,
+            Masking = true,
+            CornerRadius = 15,
+            Child = new Background(@"default_background")
+            {
+                Origin = Anchor.Centre,
+                Anchor = Anchor.Centre,
+            }
         });
 
         Hue = selector.Hue.GetBoundCopy();
+    }
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+
     }
 }
