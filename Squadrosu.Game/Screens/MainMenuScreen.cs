@@ -9,6 +9,7 @@ using Squadrosu.Game.UI.Settings;
 using Squadrosu.Game.Sprites;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Screens;
 
 namespace Squadrosu.Game.Screens;
 
@@ -23,6 +24,7 @@ public class MainMenuScreen : SquadrosuScreen
 
     public MainMenuScreen()
     {
+        MainMenuButton PlayButton;
         MainMenuButton OptionsButton;
         MainMenuButton QuitButton;
         InternalChildren = new Drawable[]
@@ -48,7 +50,7 @@ public class MainMenuScreen : SquadrosuScreen
                 Position = new Vector2(-.2f, 0),
                 Children = buttons = new MainMenuButton[]
                 {
-                    new MainMenuButton { Text = "Jouer" },
+                    PlayButton = new MainMenuButton { Text = "Jouer" },
                     new MainMenuButton { Text = "Règles" },
                     OptionsButton = new MainMenuButton { Text = "Options" },
                     QuitButton = new MainMenuButton { Text = "Quitter" },
@@ -57,6 +59,19 @@ public class MainMenuScreen : SquadrosuScreen
         };
         QuitButton.OnClicked += OnExit;
         OptionsButton.OnClicked += () => settingsOverlay?.Show();
+        PlayButton.OnClicked += goToGameScreen;
+    }
+
+    private void goToGameScreen()
+    {
+        LoadComponentAsync(new SquadrosuGameScreen(), screen =>
+        {
+            logo.Delay(2000).FadeOutFromOne(500, Easing.InOutQuad);
+            Scheduler.AddDelayed(() =>
+            {
+                this.Push(screen);
+            }, 3000);
+        });
     }
 
     [BackgroundDependencyLoader]
