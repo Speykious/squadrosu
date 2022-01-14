@@ -25,11 +25,11 @@ public class SquadrosuGame : SquadrosuGameBase
     [BackgroundDependencyLoader]
     private void load()
     {
-        settingsOverlay = new SquadrosuSettingsOverlay();
-        dependencies?.Cache(settingsOverlay);
-
         settings = new Settings();
         dependencies?.Cache(settings);
+
+        settingsOverlay = new SquadrosuSettingsOverlay();
+        dependencies?.Cache(settingsOverlay);
 
         Children = new Drawable[]
         {

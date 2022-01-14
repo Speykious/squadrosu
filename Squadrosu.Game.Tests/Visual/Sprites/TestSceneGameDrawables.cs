@@ -52,7 +52,7 @@ public class TestSceneGameDrawables : SquadrosuTestScene
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         AutoSizeAxes = Axes.Both,
-                        Spacing = new Vector2(20),
+                        Spacing = new Vector2(40),
                         Padding = new MarginPadding(20),
                         Direction = FillDirection.Vertical,
                         Children = new Drawable[]
