@@ -15,6 +15,8 @@ public class SquadrosuSettingsOverlay : SettingsOverlay
 
     public SquadrosuSettingsOverlay() : base()
     {
+        Title = "Options";
+
         Children = new SettingContainer[]
         {
             hueSetting = new HueSettingContainer

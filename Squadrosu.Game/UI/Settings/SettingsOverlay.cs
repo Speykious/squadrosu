@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
@@ -20,6 +21,13 @@ public class SettingsOverlay : VisibilityContainer
     private readonly PopupContainer popupContainer;
     private readonly Container<Drawable> contentContainer;
     protected override Container<Drawable> Content => contentContainer;
+
+    private SpriteText titleSprite;
+    public LocalisableString Title
+    {
+        get => titleSprite.Text;
+        set => titleSprite.Text = value;
+    }
 
     public SettingsOverlay()
     {
@@ -99,11 +107,10 @@ public class SettingsOverlay : VisibilityContainer
                                         RelativeSizeAxes = Axes.Both,
                                         Colour = Color4Extensions.FromHex(@"1b1b1b"),
                                     },
-                                    new SpriteText
+                                    titleSprite = new SpriteText
                                     {
                                         Anchor = Anchor.Centre,
                                         Origin = Anchor.Centre,
-                                        Text = "Options",
                                         Font = SquadrosuFont.Default.With(size: 80, weight: FontWeight.Bold),
                                     },
                                 },
