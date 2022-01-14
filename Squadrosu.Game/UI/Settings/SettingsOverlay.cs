@@ -76,7 +76,6 @@ public class SettingsOverlay : VisibilityContainer
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 RelativeSizeAxes = Axes.Both,
-                                RelativePositionAxes = Axes.Both,
                                 Padding = new MarginPadding
                                 {
                                     Top = 100,
@@ -86,8 +85,8 @@ public class SettingsOverlay : VisibilityContainer
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
-                                    RelativeSizeAxes = Axes.Both,
-                                    RelativePositionAxes = Axes.Both,
+                                    RelativeSizeAxes = Axes.X,
+                                    AutoSizeAxes = Axes.Y,
                                     Direction = FillDirection.Vertical,
                                     Spacing = new Vector2(20),
                                     Padding = new MarginPadding(20),
