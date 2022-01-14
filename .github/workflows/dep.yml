@@ -28,7 +28,7 @@ jobs:
         run: dotnet publish ${{ env.PROJECT_NAME }} -c Release -r ${{ matrix.os.runtime }} -o build/Squadrosu_${{ matrix.os.name }}/ --self-contained
 
       - name: Zip Application
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: build/Squadrosu_${{ matrix.os.name }}/
           dest: Squadrosu_${{ matrix.os.name }}.zip
