@@ -73,21 +73,25 @@ public sealed class Game
     /// <returns>Whether the piece has actually been moved.</returns>
     public bool Move(Piece piece)
     {
-        if (State != GameState.Playing || piece.Player != CurrentPlayer || !piece.Move())
+        if (State != GameState.Playing || piece.Player != CurrentPlayer)
             return false;
 
-        History.Add(new GameAction
+        bool moved = piece.Move();
+        if (moved)
         {
-            Player = CurrentPlayer,
-            LineNumber = piece.LineNumber,
-        });
+            History.Add(new GameAction
+            {
+                Player = CurrentPlayer,
+                LineNumber = piece.LineNumber,
+            });
+        }
 
         updateState();
 
-        if (State == GameState.Playing)
+        if (moved && State == GameState.Playing)
             nextTurn();
 
-        return true;
+        return moved;
     }
 
     /// <summary>

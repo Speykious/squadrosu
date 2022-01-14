@@ -113,28 +113,4 @@ public sealed class TestGame
         Assert.AreEqual(board.Blacks[0].Direction, Direction.Finished);
         Assert.AreEqual(board.Whites[2].Direction, Direction.Finished);
     }
-
-    [Test]
-    public static void CanAPlayerWin()
-    {
-        Game game = new Game(Player.Black);
-        Assert.AreEqual(game.State, GameState.Playing);
-
-        multipleMove(game, game.Board.Blacks[4], 3);
-        multipleMove(game, game.Board.Blacks[0], 10);
-        multipleMove(game, game.Board.Blacks[1], 10);
-        multipleMove(game, game.Board.Blacks[2], 10);
-        multipleMove(game, game.Board.Blacks[3], 10);
-        TestContext.Progress.WriteLine($"Black steps\n{game.Board}");
-        Assert.AreEqual(game.State, GameState.BlackWon);
-
-        game.Reset(Player.White);
-        multipleMove(game, game.Board.Whites[4], 3);
-        multipleMove(game, game.Board.Whites[0], 10);
-        multipleMove(game, game.Board.Whites[1], 10);
-        multipleMove(game, game.Board.Whites[2], 10);
-        multipleMove(game, game.Board.Whites[3], 10);
-        TestContext.Progress.WriteLine($"White steps\n{game.Board}");
-        Assert.AreEqual(game.State, GameState.WhiteWon);
-    }
 }
