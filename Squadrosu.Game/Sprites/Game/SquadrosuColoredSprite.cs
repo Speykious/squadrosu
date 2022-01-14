@@ -11,10 +11,13 @@ namespace Squadrosu.Game.Sprites.Game;
 
 public class SquadrosuColoredSprite : Sprite
 {
+    private Bindable<int>? hue;
+
     [BackgroundDependencyLoader]
     private void load(Settings settings)
     {
-        settings.Hue.BindValueChanged(onHueChanged, true);
+        hue = settings.Hue.GetBoundCopy();
+        hue.BindValueChanged(onHueChanged, true);
     }
 
     private void onHueChanged(ValueChangedEvent<int> hue)

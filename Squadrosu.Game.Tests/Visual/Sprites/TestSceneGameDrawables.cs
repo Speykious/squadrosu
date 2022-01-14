@@ -11,9 +11,9 @@ using Squadrosu.Framework;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Allocation;
 
-namespace Squadrosu.Game.Tests.Visual.Sprites.Game;
+namespace Squadrosu.Game.Tests.Visual.Sprites;
 
-public class TestSceneDrawablePiece : SquadrosuTestScene
+public class TestSceneGameDrawables : SquadrosuTestScene
 {
     private Settings? settings;
 
@@ -59,10 +59,14 @@ public class TestSceneDrawablePiece : SquadrosuTestScene
                         {
                             new DrawablePiece(board.Whites[0]),
                             new DrawablePiece(board.Blacks[0]),
+                            new DrawableSlot(),
+                            new DrawableCrossSlot(),
                         }
                     },
                 },
             },
         });
+
+        AddSliderStep("Hue", 0, 360, 0, (hue) => settings.Hue.Value = hue);
     }
 }
