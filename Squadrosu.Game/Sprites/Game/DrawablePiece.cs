@@ -2,20 +2,21 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using System;
 using osu.Framework.Allocation;
-using osu.Framework.Graphics.Textures;
-using Squadrosu.Framework;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Effects;
-using osu.Framework.Bindables;
-using osu.Framework.Graphics.Audio;
 using osu.Framework.Audio;
-using Squadrosu.Game.UI;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Audio;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Effects;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osuTK.Graphics;
+using Squadrosu.Framework;
+using Squadrosu.Game.UI;
 
 namespace Squadrosu.Game.Sprites.Game;
 
@@ -25,6 +26,19 @@ public class DrawablePiece : CompositeDrawable
     private Bindable<int> hue;
     private Container<Drawable>? slotContainer;
 
+    private bool enabled;
+    public bool Enabled
+    {
+        get => enabled;
+        set
+        {
+            this.FadeColour(Color4.White.Opacity(value ? 1f : .5f), 200, Easing.OutQuint);
+            enabled = value;
+        }
+    }
+
+    public event Action? OnClicked;
+
     protected DrawableSample? SampleHover;
     protected DrawableSample? SampleClick;
 
@@ -33,6 +47,7 @@ public class DrawablePiece : CompositeDrawable
         Piece = piece;
         hue = new Bindable<int>();
         AutoSizeAxes = Axes.Both;
+        Enabled = true;
     }
 
     [BackgroundDependencyLoader]
@@ -86,61 +101,79 @@ public class DrawablePiece : CompositeDrawable
 
     protected override bool OnHover(HoverEvent e)
     {
-        if (SampleHover != null)
+        if (Enabled)
         {
-            double range = .08;
-            SampleHover.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
-            SampleHover.Play();
-        }
+            if (SampleHover != null)
+            {
+                double range = .08;
+                SampleHover.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
+                SampleHover.Play();
+            }
 
-        slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-        {
-            Type = EdgeEffectType.Glow,
-            Radius = 20,
-            Roundness = EdgeEffect.Roundness,
-            Colour = SquadrosuColor.Hue(hue.Value).Opacity(.5f),
-        }, 200, Easing.OutQuint);
-
-        return true;
-    }
-
-    protected override void OnHoverLost(HoverLostEvent e)
-    {
-        slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-        {
-            Type = EdgeEffectType.Glow,
-            Radius = 2,
-            Roundness = EdgeEffect.Roundness,
-            Colour = SquadrosuColor.Hue(hue.Value).Opacity(0f),
-        }, 200, Easing.OutQuint);
-    }
-
-    protected override bool OnClick(ClickEvent e)
-    {
-        if (SampleClick != null)
-        {
-            double range = .08;
-            SampleClick.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
-            SampleClick.Play();
-        }
-
-        slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
-        {
-            Type = EdgeEffectType.Glow,
-            Radius = 10,
-            Roundness = EdgeEffect.Roundness,
-            Colour = Color4.White.Opacity(1f),
-        });
-        Schedule(() =>
-        {
             slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
             {
                 Type = EdgeEffectType.Glow,
                 Radius = 20,
                 Roundness = EdgeEffect.Roundness,
                 Colour = SquadrosuColor.Hue(hue.Value).Opacity(.5f),
-            }, 300, Easing.OutQuint);
-        });
-        return true;
+            }, 200, Easing.OutQuint);
+
+            return true;
+        }
+
+        return base.OnHover(e);
+    }
+
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        if (Enabled)
+        {
+            slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+            {
+                Type = EdgeEffectType.Glow,
+                Radius = 2,
+                Roundness = EdgeEffect.Roundness,
+                Colour = SquadrosuColor.Hue(hue.Value).Opacity(0f),
+            }, 200, Easing.OutQuint);
+
+            return;
+        }
+
+        base.OnHoverLost(e);
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (Enabled)
+        {
+            if (SampleClick != null)
+            {
+                double range = .08;
+                SampleClick.Frequency.Value = 1 + RNG.NextDouble(range) - range / 2;
+                SampleClick.Play();
+            }
+
+            slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+            {
+                Type = EdgeEffectType.Glow,
+                Radius = 10,
+                Roundness = EdgeEffect.Roundness,
+                Colour = Color4.White.Opacity(1f),
+            });
+            Schedule(() =>
+            {
+                slotContainer.TweenEdgeEffectTo(new EdgeEffectParameters
+                {
+                    Type = EdgeEffectType.Glow,
+                    Radius = 20,
+                    Roundness = EdgeEffect.Roundness,
+                    Colour = SquadrosuColor.Hue(hue.Value).Opacity(.5f),
+                }, 300, Easing.OutQuint);
+            });
+
+            return true;
+        }
+
+        return base.OnClick(e);
     }
 }

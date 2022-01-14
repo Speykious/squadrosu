@@ -3,6 +3,7 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -17,6 +18,8 @@ namespace Squadrosu.Game.Sprites.Game;
 public class DrawableBoard : CompositeDrawable
 {
     public readonly Board Board;
+    public Bindable<bool> EnableWhiteInput { get; set; }
+    public Bindable<bool> EnableBlackInput { get; set; }
 
     private readonly DrawablePiece[] whiteDrawables;
     private readonly DrawablePiece[] blackDrawables;
@@ -24,6 +27,8 @@ public class DrawableBoard : CompositeDrawable
     public DrawableBoard(Board board)
     {
         Board = board;
+        EnableWhiteInput = new BindableBool(true);
+        EnableBlackInput = new BindableBool(true);
         whiteDrawables = new DrawablePiece[5];
         blackDrawables = new DrawablePiece[5];
 
@@ -165,5 +170,16 @@ public class DrawableBoard : CompositeDrawable
 
         pieceContainer.AddRange(whiteDrawables);
         pieceContainer.AddRange(blackDrawables);
+
+        EnableWhiteInput.ValueChanged += (e) =>
+        {
+            foreach (DrawablePiece white in whiteDrawables)
+                white.Enabled = e.NewValue;
+        };
+        EnableBlackInput.ValueChanged += (e) =>
+        {
+            foreach (DrawablePiece black in blackDrawables)
+                black.Enabled = e.NewValue;
+        };
     }
 }
