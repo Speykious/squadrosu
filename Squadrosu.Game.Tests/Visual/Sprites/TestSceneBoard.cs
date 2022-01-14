@@ -3,12 +3,9 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osuTK;
 using Squadrosu.Game.Sprites.Game;
 using Squadrosu.Game.UI;
 using Squadrosu.Framework;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Allocation;
 
 namespace Squadrosu.Game.Tests.Visual.Sprites;
@@ -28,6 +25,7 @@ public class TestSceneBoard : SquadrosuTestScene
         dependencies?.Cache(settings);
 
         Board board = new Board();
+        DrawableBoard drawableBoard;
         AddRange(new Drawable[]
         {
             new Background("default_background")
@@ -35,13 +33,15 @@ public class TestSceneBoard : SquadrosuTestScene
                 Blur = 15,
                 Dim = 0,
             },
-            new DrawableBoard(board)
+            drawableBoard = new DrawableBoard(board)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
             },
         });
 
+        AddToggleStep("Enable White Pieces", (enabled) => drawableBoard.EnableWhiteInput.Value = enabled);
+        AddToggleStep("Enable Black Pieces", (enabled) => drawableBoard.EnableBlackInput.Value = enabled);
         AddSliderStep("Hue", 0, 360, 0, (hue) => settings.Hue.Value = hue);
     }
 }
