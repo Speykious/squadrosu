@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Squadrosu.Framework\Squadrosu.Framework.csproj" />
     <ProjectReference Include="..\Squadrosu.Resources\Squadrosu.Resources.csproj" />
   </ItemGroup>
 
