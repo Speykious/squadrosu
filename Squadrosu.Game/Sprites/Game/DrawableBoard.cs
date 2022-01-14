@@ -18,9 +18,36 @@ public class DrawableBoard : CompositeDrawable
 {
     public readonly Board Board;
 
+    private readonly DrawablePiece[] whiteDrawables;
+    private readonly DrawablePiece[] blackDrawables;
+
     public DrawableBoard(Board board)
     {
         Board = board;
+        whiteDrawables = new DrawablePiece[5];
+        blackDrawables = new DrawablePiece[5];
+
+        for (int i = 0; i < 5; i++)
+        {
+            whiteDrawables[i] = new DrawablePiece(Board.Whites[i])
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.Centre,
+                RelativePositionAxes = Axes.Both,
+                Rotation = 90,
+                X = (i + 1) / 6f,
+                Y = 0f,
+            };
+            blackDrawables[i] = new DrawablePiece(Board.Blacks[i])
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.Centre,
+                RelativePositionAxes = Axes.Both,
+                X = 0f,
+                Y = (i + 1) / 6f,
+            };
+        }
+
         AutoSizeAxes = Axes.Both;
         Masking = true;
         CornerRadius = 30;
@@ -80,13 +107,15 @@ public class DrawableBoard : CompositeDrawable
             }
         }
 
+        Texture zebra = textures.Get(@$"board/board_zebra_background");
+
         AddRangeInternal(new Drawable[]
         {
             new Sprite
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Texture = textures.Get(@$"board/board_zebra_background"),
+                Texture = zebra,
             },
             new SquadrosuColoredSprite
             {
@@ -123,5 +152,18 @@ public class DrawableBoard : CompositeDrawable
                 Content = boardGridChildren
             },
         });
+
+        Container pieceContainer;
+
+        AddInternal(pieceContainer = new Container
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativeSizeAxes = Axes.Both,
+            Padding = new MarginPadding(zebra.DisplayWidth / 14f),
+        });
+
+        pieceContainer.AddRange(whiteDrawables);
+        pieceContainer.AddRange(blackDrawables);
     }
 }
