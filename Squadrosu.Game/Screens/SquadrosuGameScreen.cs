@@ -18,9 +18,13 @@ public class SquadrosuGameScreen : SquadrosuScreen
     private readonly DrawableBoard drawableBoard;
     private readonly Framework.Game game;
 
+    private readonly WinOverlay winOverlay;
+
     public SquadrosuGameScreen()
     {
         game = new(Player.White);
+        winOverlay = new WinOverlay();
+
         InternalChildren = new Drawable[]
         {
             background = new Background(@"default_background")
@@ -33,6 +37,7 @@ public class SquadrosuGameScreen : SquadrosuScreen
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
             },
+            winOverlay,
         };
 
         drawableBoard.EnableWhiteInput.Value = true;
@@ -66,9 +71,13 @@ public class SquadrosuGameScreen : SquadrosuScreen
                 break;
             case GameState.WhiteWon:
                 drawableBoard.DisplayWin(Player.White);
+                winOverlay.Winner = Player.White;
+                winOverlay.ToggleVisibility();
                 break;
             case GameState.BlackWon:
                 drawableBoard.DisplayWin(Player.Black);
+                winOverlay.Winner = Player.Black;
+                winOverlay.ToggleVisibility();
                 break;
         }
     }
