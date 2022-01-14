@@ -37,7 +37,6 @@ public class SquadrosuGameScreen : SquadrosuScreen
 
         drawableBoard.EnableWhiteInput.Value = true;
         drawableBoard.EnableBlackInput.Value = false;
-
         drawableBoard.OnPieceClicked += onPieceClickedEventHandler;
     }
 

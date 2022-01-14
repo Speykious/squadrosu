@@ -4,12 +4,12 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Sprites;
 
 namespace Squadrosu.Game.UI.Settings;
 
 public class SquadrosuSettingsOverlay : SettingsOverlay
 {
+    private readonly HueSettingContainer hueSetting;
     private readonly BackgroundSettingContainer menuBackgroundSetting;
     private readonly BackgroundSettingContainer gameBackgroundSetting;
 
@@ -17,7 +17,7 @@ public class SquadrosuSettingsOverlay : SettingsOverlay
     {
         Children = new SettingContainer[]
         {
-            new HueSettingContainer
+            hueSetting = new HueSettingContainer
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -40,6 +40,10 @@ public class SquadrosuSettingsOverlay : SettingsOverlay
     [BackgroundDependencyLoader]
     private void load(Game.Settings settings)
     {
+        hueSetting.Hue.ValueChanged += (e) =>
+        {
+            settings.Hue.Value = e.NewValue;
+        };
         menuBackgroundSetting.Blur.ValueChanged += (e) =>
         {
             settings.MenuBackground.Value = new BackgroundConfig
