@@ -12,6 +12,12 @@ namespace Squadrosu.Game.UI.Settings;
 
 public class BackgroundSettingContainer : SettingContainer
 {
+    private readonly PercentageSettingSlider blurSlider;
+    private readonly PercentageSettingSlider dimSlider;
+
+    public Bindable<int> Blur => blurSlider.Current;
+    public Bindable<int> Dim => dimSlider.Current;
+
     public BackgroundSettingContainer() : base()
     {
         Title = "Arrière-plan";
@@ -24,7 +30,7 @@ public class BackgroundSettingContainer : SettingContainer
             Spacing = new Vector2(10),
             Children = new Drawable[]
             {
-                new PercentageSettingSlider
+                dimSlider = new PercentageSettingSlider
                 {
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
@@ -32,7 +38,7 @@ public class BackgroundSettingContainer : SettingContainer
                     AutoSizeAxes = Axes.Y,
                     Label = "Obscurité",
                 },
-                new PercentageSettingSlider
+                blurSlider = new PercentageSettingSlider
                 {
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,

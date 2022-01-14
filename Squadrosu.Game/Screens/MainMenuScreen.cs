@@ -19,7 +19,7 @@ public class MainMenuScreen : SquadrosuScreen
     private readonly MainMenuButton[] buttons;
 
     [Resolved]
-    private SquadrosuSettingsOverlay? optionOverlay { get; set; }
+    private SquadrosuSettingsOverlay? settingsOverlay { get; set; }
 
     public MainMenuScreen()
     {
@@ -56,7 +56,7 @@ public class MainMenuScreen : SquadrosuScreen
             },
         };
         QuitButton.OnClicked += OnExit;
-        OptionsButton.OnClicked += () => optionOverlay?.Show();
+        OptionsButton.OnClicked += () => settingsOverlay?.Show();
     }
 
     [BackgroundDependencyLoader]

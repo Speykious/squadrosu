@@ -3,6 +3,7 @@
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -15,12 +16,19 @@ public class PercentageSettingSlider : Container<Drawable>
 {
     public LocalisableString Label { get; set; }
     private SpriteText? percentage;
-    private SquadrosuSliderBar? slider;
+    private readonly SquadrosuSliderBar slider;
+    public Bindable<int> Current => slider.Current;
 
     public PercentageSettingSlider() : base()
     {
         RelativeSizeAxes = Axes.X;
         AutoSizeAxes = Axes.Y;
+        slider = new SquadrosuSliderBar
+        {
+            Origin = Anchor.Centre,
+            Anchor = Anchor.Centre,
+            RelativeSizeAxes = Axes.X,
+        };
     }
 
     [BackgroundDependencyLoader]
@@ -77,12 +85,7 @@ public class PercentageSettingSlider : Container<Drawable>
                         },
                     },
                 },
-                slider = new SquadrosuSliderBar
-                {
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    RelativeSizeAxes = Axes.X,
-                },
+                slider,
             },
         };
 
