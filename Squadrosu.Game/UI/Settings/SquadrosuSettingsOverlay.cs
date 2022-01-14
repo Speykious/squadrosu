@@ -24,11 +24,13 @@ public class SquadrosuSettingsOverlay : SettingsOverlay
             },
             menuBackgroundSetting = new BackgroundSettingContainer
             {
+                Title = "Arrière-plan Menu",
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
             },
             gameBackgroundSetting = new BackgroundSettingContainer
             {
+                Title = "Arrière-plan Jeu",
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
             },
