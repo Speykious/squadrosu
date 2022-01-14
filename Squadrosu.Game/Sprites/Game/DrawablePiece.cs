@@ -37,7 +37,7 @@ public class DrawablePiece : CompositeDrawable
         }
     }
 
-    public event Action? OnClicked;
+    public event EventHandler<PieceClickedEventArgs>? OnClicked;
 
     protected DrawableSample? SampleHover;
     protected DrawableSample? SampleClick;
@@ -171,11 +171,21 @@ public class DrawablePiece : CompositeDrawable
                 }, 300, Easing.OutQuint);
             });
 
-            OnClicked?.Invoke();
+            OnClicked?.Invoke(this, new PieceClickedEventArgs(Piece));
 
             return true;
         }
 
         return base.OnClick(e);
+    }
+}
+
+public class PieceClickedEventArgs : EventArgs
+{
+    public Piece Piece { get; set; }
+
+    public PieceClickedEventArgs(Piece piece)
+    {
+        Piece = piece;
     }
 }

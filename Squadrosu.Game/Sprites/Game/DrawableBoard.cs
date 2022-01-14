@@ -2,6 +2,7 @@
 // This file is part of Squadrosu!.
 // Squadrosu! is licensed under the GPL v3. See LICENSE.md for details.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -24,6 +25,8 @@ public class DrawableBoard : CompositeDrawable
     private readonly DrawablePiece[] whiteDrawables;
     private readonly DrawablePiece[] blackDrawables;
 
+    public event EventHandler<PieceClickedEventArgs>? OnPieceClicked;
+
     public DrawableBoard(Board board)
     {
         Board = board;
@@ -34,7 +37,7 @@ public class DrawableBoard : CompositeDrawable
 
         for (int i = 0; i < 5; i++)
         {
-            whiteDrawables[i] = new DrawablePiece(Board.Whites[i])
+            DrawablePiece whitePiece = new DrawablePiece(Board.Whites[i])
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.Centre,
@@ -43,7 +46,10 @@ public class DrawableBoard : CompositeDrawable
                 X = (i + 1) / 6f,
                 Y = 0f,
             };
-            blackDrawables[i] = new DrawablePiece(Board.Blacks[i])
+            whitePiece.OnClicked += onPieceClickedEventHandler;
+            whiteDrawables[i] = whitePiece;
+
+            DrawablePiece blackPiece = new DrawablePiece(Board.Blacks[i])
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.Centre,
@@ -51,6 +57,8 @@ public class DrawableBoard : CompositeDrawable
                 X = 0f,
                 Y = (i + 1) / 6f,
             };
+            blackPiece.OnClicked += onPieceClickedEventHandler;
+            blackDrawables[i] = blackPiece;
         }
 
         AutoSizeAxes = Axes.Both;
@@ -62,6 +70,35 @@ public class DrawableBoard : CompositeDrawable
             Radius = 20f,
             Colour = Color4.Black.Opacity(.5f),
         };
+    }
+
+    private void onPieceClickedEventHandler(object? sender, PieceClickedEventArgs e)
+    {
+        OnPieceClicked?.Invoke(this, e);
+        UpdateFromBoard();
+    }
+
+    public void UpdateFromBoard()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            updateDrawablePiece(whiteDrawables[i], Player.White);
+            updateDrawablePiece(blackDrawables[i], Player.Black);
+        }
+    }
+
+    private void updateDrawablePiece(DrawablePiece piece, Player player)
+    {
+        if (player == Player.White)
+        {
+            piece.MoveToY(piece.Piece.Position / 6f, 300, Easing.OutQuint).Then()
+            .RotateTo(piece.Piece.Direction == Framework.Direction.Forward ? 90 : -90, 200, Easing.OutQuint);
+        }
+        else
+        {
+            piece.MoveToX(piece.Piece.Position / 6f, 300, Easing.OutQuint).Then()
+            .RotateTo(piece.Piece.Direction == Framework.Direction.Forward ? 0 : 180, 200, Easing.OutQuint);
+        }
     }
 
     [BackgroundDependencyLoader]

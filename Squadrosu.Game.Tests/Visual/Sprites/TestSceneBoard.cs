@@ -40,8 +40,17 @@ public class TestSceneBoard : SquadrosuTestScene
             },
         });
 
+        drawableBoard.OnPieceClicked += onPieceClickedEventHandler;
+
         AddToggleStep("Enable White Pieces", (enabled) => drawableBoard.EnableWhiteInput.Value = enabled);
         AddToggleStep("Enable Black Pieces", (enabled) => drawableBoard.EnableBlackInput.Value = enabled);
+        AddStep("Reset Board", () =>
+        {
+            drawableBoard.Board.Reset();
+            drawableBoard.UpdateFromBoard();
+        });
         AddSliderStep("Hue", 0, 360, 0, (hue) => settings.Hue.Value = hue);
     }
+
+    private void onPieceClickedEventHandler(object? sender, PieceClickedEventArgs e) => e.Piece.Move();
 }
