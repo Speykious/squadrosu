@@ -57,7 +57,7 @@ public class SquadrosuGameScreen : SquadrosuScreen
     {
         game.Move(e.Piece);
 
-        if (game.Board.PlayerWon() != null)
+        if (game.Board.PlayerWon() == null)
         {
             bool isWhite = game.CurrentPlayer == Player.White;
             drawableBoard.EnableWhiteInput.Value = isWhite;
