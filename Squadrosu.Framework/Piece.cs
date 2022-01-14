@@ -75,12 +75,16 @@ public class Piece
     /// <summary>
     /// Move the position of the piece
     /// </summary>
-    public void Move()
+    public bool Move()
     {
         if (Direction == Direction.Forward)
             moveForward();
         else if (Direction == Direction.Backward)
             moveBackward();
+        else
+            return false;
+
+        return true;
     }
 
     /// <summary>
@@ -150,7 +154,7 @@ public class Piece
                 {
                     while ((piece = Board.Grid[LineNumber, i - 1]) != null)
                     {
-                        piece.Reset();
+                        piece.PlaceOnEdge();
                         newPosition = i - 2;
                         i--;
                     }
@@ -163,7 +167,7 @@ public class Piece
                 {
                     while ((piece = Board.Grid[i - 1, LineNumber]) != null)
                     {
-                        piece.Reset();
+                        piece.PlaceOnEdge();
                         newPosition = i - 2;
                         i--;
                     }
