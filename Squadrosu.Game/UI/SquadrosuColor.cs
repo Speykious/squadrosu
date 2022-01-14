@@ -15,4 +15,5 @@ public static class SquadrosuColor
     public static Color4 Hue(int hue) => Color4Extensions.FromHSV(hue, .8f, 1f);
 
     public static Color4 ButtonGray => Gray(0x32);
+    public static Color4 SliderGray => Gray(0xcc);
 }
