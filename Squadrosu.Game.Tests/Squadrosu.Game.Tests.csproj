@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="Project References">
+    <ProjectReference Include="..\Squadrosu.Framework\Squadrosu.Framework.csproj" />
     <ProjectReference Include="..\Squadrosu.Game\Squadrosu.Game.csproj" />
   </ItemGroup>
 
