@@ -1,0 +1,75 @@
+name: Deploy
+on: release
+
+env:
+  PROJECT_NAME: Squadrosu.Desktop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: Windows, runner: windows-latest, runtime: win-x64 }
+          - { name: MacOS, runner: macos-latest, runtime: osx-x64 }
+          - { name: Linux, runner: ubuntu-latest, runtime: linux-x64 }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Publish Application
+        run: dotnet publish ${{ env.PROJECT_NAME }} -c Release -r ${{ matrix.os.runtime }} -o build/Squadrosu_${{ matrix.os.name }}/ --self-contained
+
+      - name: Zip Application
+        uses: papeloto/action-zip@v1
+        with:
+          files: build/Squadrosu_${{ matrix.os.name }}/
+          dest: Squadrosu_${{ matrix.os.name }}.zip
+
+      - name: Upload app artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Squadrosu_${{ matrix.os.name }}
+          path: Squadrosu_${{ matrix.os.name }}.zip
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Windows app artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: Squadrosu_Windows
+          path: build/
+
+      - name: Download Linux app artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: Squadrosu_Linux
+          path: build/
+
+      - name: Download MacOS app artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: Squadrosu_MacOS
+          path: build/
+
+      - name: Generate Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          prerelease: ${{ github.event.release.prerelease }}
+          artifacts: ${{ github.workspace }}/build/*.zip
+          name: ${{ format('Squadrosu {0}', github.event.release.tag_name) }}
+          tag: ${{ github.event.release.tag_name }}
+          body: ${{ format('Squadrosu {0} has been released! Download the application for your OS below.', github.event.release.tag_name) }}
+          generateReleaseNotes: true
