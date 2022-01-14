@@ -12,9 +12,18 @@ namespace Squadrosu.Game.Tests.Visual;
 
 public class TestSceneSettingsOverlay : SquadrosuTestScene
 {
+    private Settings? settings;
+
+    private DependencyContainer? dependencies;
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
+        dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
     [BackgroundDependencyLoader]
     private void load()
     {
+        settings = new Settings();
+        dependencies?.Cache(settings);
+
         SquadrosuSettingsOverlay overlay;
 
         Add(new Container
