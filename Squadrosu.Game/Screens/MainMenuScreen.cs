@@ -8,11 +8,13 @@ using Squadrosu.Game.UI;
 using Squadrosu.Game.UI.Settings;
 using Squadrosu.Game.Sprites;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 
 namespace Squadrosu.Game.Screens;
 
 public class MainMenuScreen : SquadrosuScreen
 {
+    private readonly Background background;
     private readonly Logo logo;
     private readonly MainMenuButton[] buttons;
 
@@ -25,7 +27,7 @@ public class MainMenuScreen : SquadrosuScreen
         MainMenuButton QuitButton;
         InternalChildren = new Drawable[]
         {
-            new Background(@"default_background")
+            background = new Background(@"default_background")
             {
                 Blur = 10,
                 Dim = 10,
@@ -55,6 +57,19 @@ public class MainMenuScreen : SquadrosuScreen
         };
         QuitButton.OnClicked += OnExit;
         OptionsButton.OnClicked += () => optionOverlay?.Show();
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(Settings settings)
+    {
+        settings.MenuBackground.BindValueChanged(onBackgroundChange, true);
+    }
+
+    private void onBackgroundChange(ValueChangedEvent<BackgroundConfig> e)
+    {
+        BackgroundConfig config = e.NewValue;
+        background.BlurTo(new Vector2(config.Blur), 200, Easing.OutQuint);
+        background.DimTo(config.Dim, 200, Easing.OutQuint);
     }
 
     protected override void LoadComplete()
